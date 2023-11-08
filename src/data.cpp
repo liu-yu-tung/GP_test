@@ -35,48 +35,46 @@ void GETINFO(){
     std::cout << "::::::::::::::::::::::::::::::::::" << std::endl;
 };
 
+//show funciton of data
 void Data::show(std::vector<int> &bufferInt1D){
-    for (auto item:bufferInt1D)
+    for (int item:bufferInt1D)
         std::cout << item << " ";
     std::cout << std::endl;
 };
 void Data::show(std::vector<std::vector<int>> &bufferInt2D){
-    for (auto row:bufferInt2D)
-        for (auto item:row)
+    for (auto row:bufferInt2D){
+        for (int item:row)
             std::cout << item << " ";
         std::cout << std::endl;
+    }
     std::cout << std::endl;
 }
 void Data::show(std::vector<float> &bufferFloat1D){
-    for (auto item:bufferFloat1D)
+    for (float item:bufferFloat1D)
         std::cout << item << " ";
     std::cout << std::endl;
 };
 
 void Data::show(std::vector<std::vector<float>> &bufferFloat2D){
-    for (auto row:bufferFloat2D)
+    for (auto row:bufferFloat2D){
         for (auto item:row)
             std::cout << item << " ";
         std::cout << std::endl;
+    }
     std::cout << std::endl;
 }
 
+//Based on global setting, setup the data buffer
 Data::Data(){
     if(typeOfBuffer==Int){
-        if(dimensionOfBuffer==1) bufferInt1D.resize(shapeOfBuffer.getLength());
-        else if(dimensionOfBuffer==2){
-            bufferInt2D.resize(shapeOfBuffer.getWidth());
-            for (auto row: bufferInt2D)
-                row.resize(shapeOfBuffer.getLength()); 
-        }
+        if(dimensionOfBuffer==1) bufferInt1D.resize(shapeOfBuffer.getLength(), 0);
+        else if(dimensionOfBuffer==2)
+            bufferInt2D.resize(shapeOfBuffer.getWidth(), std::vector<int>(shapeOfBuffer.getLength(), 0));
     }
     else if(typeOfBuffer==Float){
-        if(dimensionOfBuffer==1) bufferFloat1D.resize(shapeOfBuffer.getLength());
-        else if(dimensionOfBuffer==2){
-            bufferFloat2D.resize(shapeOfBuffer.getWidth());
-            for (auto row: bufferFloat2D)
-                row.resize(shapeOfBuffer.getLength()); 
-        }
+        if(dimensionOfBuffer==1) bufferFloat1D.resize(shapeOfBuffer.getLength(), 0.0);
+        else if(dimensionOfBuffer==2)
+            bufferFloat2D.resize(shapeOfBuffer.getWidth(), std::vector<float>(shapeOfBuffer.getLength(), 0.0));
     }
 };
 

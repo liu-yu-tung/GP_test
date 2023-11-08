@@ -1,0 +1,11 @@
+# in data.hpp
+static const int dimensionOfBuffer
+static const DataType typeOfBuffer 
+static const Shape shapeOfBuffer
+
+# in Function.cpp
+const int Function::arity = -1;
+const int Function::outputNumber = -1;
+
+const int Max2::arity = 2;
+const int Max2::outputNumber = 1;

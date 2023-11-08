@@ -1,8 +1,9 @@
 #pragma once
-#include<vector>
-#include<memory>
-#include<iostream>
-#include<stdio.h>
+#include "function.hpp"
+#include <vector>
+#include <memory>
+#include <iostream>
+#include <stdio.h>
 
 enum DataType{
     Int,
@@ -20,25 +21,56 @@ public:
     void getShape() const;    
 };
 
-static const int dimensionOfBuffer = 2;
-static const DataType typeOfBuffer = Int;
-static const Shape shapeOfBuffer(10, 10);
+//defined constants
+namespace Const{
+    static const int dimensionOfBuffer = 2;
+    static const DataType typeOfBuffer = Int;
+    static const Shape shapeOfBuffer = Shape(10, 10);
+};
 
 //get basic data info
 void GETINFO();
 
+class bufferBase{
+public:
+    virtual void show() = 0;
+};
+
+class bufferInt1D: public bufferBase{
+public:
+    bufferInt1D();
+    std::vector<int> buffer;
+    void show();
+};
+
+class bufferInt2D: public bufferBase{
+public:
+    bufferInt2D();
+    std::vector<std::vector<int>> buffer;
+    void show();
+};
+
+class bufferFloat1D: public bufferBase{
+public:
+    bufferFloat1D();
+    std::vector<float> buffer;
+    void show();
+};
+
+class bufferFloat2D: public bufferBase{
+public:
+    bufferFloat2D();
+    std::vector<std::vector<float>> buffer;
+    void show();
+};
+
 
 class Data{
-    std::vector<int> bufferInt1D;
-    std::vector<std::vector<int>> bufferInt2D;
-    std::vector<float> bufferFloat1D;
-    std::vector<std::vector<float>> bufferFloat2D;
-    void show(std::vector<int> &);
-    void show(std::vector<std::vector<int>> &);
-    void show(std::vector<float> &);
-    void show(std::vector<std::vector<float>>&);
+friend class Max2;
+    bufferBase* bufferPtr;
 public:
     Data();
-    void showBuffer();
+    ~Data();
+    void show();
 };
 

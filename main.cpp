@@ -1,12 +1,16 @@
-#include<iostream>
+#include <iostream>
 #include "include/data.hpp"
-
-using namespace std;
+#include "include/function.hpp"
 
 int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );
-    GETINFO();
+    //GETINFO();
     Data A;
-    A.showBuffer();
+    A.show();
+    //Max2 B;
+    //std::vector<int> x(4, 2);
+    //std::vector<int> y(2, 3);
+    //setArgument(B, x, y);
+    //B.showIO();
     return 0;
 }

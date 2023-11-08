@@ -1,7 +1,5 @@
 #include "../include/data.hpp"
-
 Shape::Shape(int _lengthOfBuffer):lengthOfBuffer(_lengthOfBuffer){};
-
 
 Shape::Shape(int _lengthOfBuffer, int _widthOfBuffer):
     lengthOfBuffer(_lengthOfBuffer), widthOfBuffer(_widthOfBuffer){};
@@ -11,7 +9,7 @@ int Shape::getLength() const{
 };
     
 int Shape::getWidth() const{
-    if(dimensionOfBuffer==1){
+    if(Const::dimensionOfBuffer==1){
         std::cerr << "Cannot get the width of ONE dimensional vector" << std::endl;
         return -1;
     }
@@ -20,74 +18,84 @@ int Shape::getWidth() const{
 
 void Shape::getShape() const{
     std::cout << "Buffer's Shape: ";
-    if (dimensionOfBuffer == 1) 
+    if (Const::dimensionOfBuffer == 1) 
         std::cout << "length=" << lengthOfBuffer << std::endl;
     else
         std::cout << "length=" << lengthOfBuffer << ", width=" << widthOfBuffer << std::endl;
 
 };
+//constructor of differenet type
+bufferInt1D::bufferInt1D(){
+    buffer.resize(Const::shapeOfBuffer.getLength(), 0);
+};
 
+bufferInt2D::bufferInt2D(){
+    buffer.resize(Const::shapeOfBuffer.getLength(), std::vector<int>(Const::shapeOfBuffer.getWidth(), 0));
+};
+
+bufferFloat1D::bufferFloat1D(){
+    buffer.resize(Const::shapeOfBuffer.getLength(), 0.0);
+};
+
+bufferFloat2D::bufferFloat2D(){
+    buffer.resize(Const::shapeOfBuffer.getLength(), std::vector<float>(Const::shapeOfBuffer.getWidth(), 0.0));
+};
+
+//show function of different type
+void bufferInt1D::show(){
+    std::cout << "bufferInt1D: ";
+    for(int item: buffer) std::cout << item << " ";
+    std::cout << std::endl;
+};
+
+void bufferFloat1D::show(){
+    std::cout << "bufferFloat1D: ";
+    for(int item: buffer) std::cout << item << " ";
+    std::cout << std::endl;
+};
+
+void bufferInt2D::show(){
+    std::cout << "bufferInt2D:\n";
+    for(std::vector<int> row: buffer){
+        for(int item: row)std::cout << item << " ";
+        std::cout << std::endl;
+    }
+};
+
+void bufferFloat2D::show(){
+    std::cout << "bufferFloat2D:\n";
+    for(std::vector<float> row: buffer){
+        for(float item: row)std::cout << item << " ";
+        std::cout << std::endl;
+    }
+};
+
+//show basic information about data
 void GETINFO(){
     std::cout << "::::::::::INFO of BUFFER::::::::::" << std::endl;
-    std::cout << "Dimension of Buffer: " << dimensionOfBuffer << std::endl;
-    std::cout << "Type of Buffer: " << typeOfBuffer << std::endl;
-    shapeOfBuffer.getShape();
+    std::cout << "Dimension of Buffer: " << Const::dimensionOfBuffer << std::endl;
+    std::cout << "Type of Buffer: " << Const::typeOfBuffer << std::endl;
+    Const::shapeOfBuffer.getShape();
     std::cout << "::::::::::::::::::::::::::::::::::" << std::endl;
 };
 
-//show funciton of data
-void Data::show(std::vector<int> &bufferInt1D){
-    for (int item:bufferInt1D)
-        std::cout << item << " ";
-    std::cout << std::endl;
-};
-void Data::show(std::vector<std::vector<int>> &bufferInt2D){
-    for (auto row:bufferInt2D){
-        for (int item:row)
-            std::cout << item << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-void Data::show(std::vector<float> &bufferFloat1D){
-    for (float item:bufferFloat1D)
-        std::cout << item << " ";
-    std::cout << std::endl;
-};
-
-void Data::show(std::vector<std::vector<float>> &bufferFloat2D){
-    for (auto row:bufferFloat2D){
-        for (auto item:row)
-            std::cout << item << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-
-//Based on global setting, setup the data buffer
 Data::Data(){
-    if(typeOfBuffer==Int){
-        if(dimensionOfBuffer==1) bufferInt1D.resize(shapeOfBuffer.getLength(), 0);
-        else if(dimensionOfBuffer==2)
-            bufferInt2D.resize(shapeOfBuffer.getWidth(), std::vector<int>(shapeOfBuffer.getLength(), 0));
+    if(Const::dimensionOfBuffer==1){
+        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt1D;
+        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat1D;
     }
-    else if(typeOfBuffer==Float){
-        if(dimensionOfBuffer==1) bufferFloat1D.resize(shapeOfBuffer.getLength(), 0.0);
-        else if(dimensionOfBuffer==2)
-            bufferFloat2D.resize(shapeOfBuffer.getWidth(), std::vector<float>(shapeOfBuffer.getLength(), 0.0));
+    else if(Const::dimensionOfBuffer==2)  {
+        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt2D;
+        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat2D;
     }
 };
 
-void Data::showBuffer(){
-    if(typeOfBuffer==Int){
-        if(dimensionOfBuffer==1) show(bufferInt1D);
-        else if(dimensionOfBuffer==2) show(bufferInt2D);
-    }
-    else if(typeOfBuffer==Float){
-        if(dimensionOfBuffer==1) show(bufferFloat1D);
-        else if(dimensionOfBuffer==2) show(bufferFloat2D);
-    }
+Data::~Data(){
+    delete bufferPtr;
 };
 
+void Data::show(){
+    bufferPtr->show();
+};
 
 

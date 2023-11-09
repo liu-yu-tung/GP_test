@@ -10,13 +10,15 @@ friend void setArgument(Function &, std::vector<int> &, std::vector<int> &);
 public:
     void addChild(Function *);
     void showIO();
+    void setHeight(int);
     virtual std::string getFunctionName() = 0;
     virtual void execution(Data &) = 0;
 
 protected:
     static const int arity;
     static const int outputNumber;
-    
+    int height;
+
     virtual int getArity() = 0;
     virtual int getOutputNumber() = 0;
     //for 1-D data, store index once a time. e.g, argumentIndex[0] = index

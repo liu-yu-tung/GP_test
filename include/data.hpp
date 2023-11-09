@@ -26,6 +26,21 @@ namespace Const{
     static const int dimensionOfBuffer = 2;
     static const DataType typeOfBuffer = Int;
     static const Shape shapeOfBuffer = Shape(10, 10);
+    
+    static const int maximumTreeHeight = 2;
+    
+    enum growMethod{
+        grow,
+        full,
+        half_half
+    };
+    static const growMethod growMethodGlobal = growMethod::full; 
+
+    enum functionSet{
+        Max2,
+        NUM_ENTRIES
+    };
+    static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES);
 };
 
 //get basic data info

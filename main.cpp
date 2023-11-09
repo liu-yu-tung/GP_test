@@ -1,10 +1,12 @@
 #include <iostream>
 #include "include/data.hpp"
-//#include "include/function.hpp"
+#include "include/function.hpp"
+#include "include/program.hpp"
 
 int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );
     //GETINFO();
+    
     Data A;
     A.show();
     std::vector<int> x = {2, 3};
@@ -12,13 +14,26 @@ int main(int argc, char** argv) {
     std::vector<int> y = {3, 4};
     A.returnIntValue(y) = 5;
     A.show();
+    /*
     //A.returnValue<int>(x) = 3;
     //std::cout << A.returnValue<int>(x);
     Max2 B;
+    
     std::vector<int> index = {2, 3, 3, 4};
     std::vector<int> output = {2, 4};
     setArgument(B, index, output);
     B.execution(A);
+    A.show();
+    */
+    std::cout << Const::functionSetNumber << std::endl;
+    
+    Program C(Const::growMethodGlobal);
+    Function* D = C.randomChooseFunction();
+    std::vector<int> index = {2, 3, 3, 4};
+    std::vector<int> output = {2, 4};
+    setArgument(*D, index, output);
+    std::cout << D->getFunctionName() << std::endl;
+    D->execution(A);
     A.show();
     return 0;
 }

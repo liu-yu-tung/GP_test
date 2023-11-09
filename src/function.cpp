@@ -38,6 +38,10 @@ void Function::showIO(){
     std::cout << "::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
 };
 
+void Function::setHeight(int h){
+    height = h;
+};
+
 std::string Max2::getFunctionName(){
     return Max2::functionName;
 }

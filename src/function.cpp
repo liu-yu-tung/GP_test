@@ -52,13 +52,19 @@ int Max2::getOutputNumber(){
 
 //implementation of max(a, b)
 void Max2::execution(Data &data){
-    if(Const::dimensionOfBuffer==1){
-        int index1 = argumentIndex[0];
-        int index2 = argumentIndex[1];
-        int max = data.bufferPtr->buffer
+    int a, b;
+    std::vector<int> index1(argumentIndex.begin(), argumentIndex.begin()+Const::dimensionOfBuffer);
+    std::vector<int> index2(argumentIndex.begin()+Const::dimensionOfBuffer, argumentIndex.begin()+Const::dimensionOfBuffer*2);
+    
+    if(Const::typeOfBuffer==Int){
+        a = data.returnIntValue(index1);
+        b = data.returnIntValue(index2);
+        data.returnIntValue(outputIndex) = a>b? a:b;
     }   
-    else if(Const::dimensionOfBuffer==2){
-
+    else if(Const::typeOfBuffer==Float){
+        a = data.returnFloatValue(index1);
+        b = data.returnFloatValue(index2);
+        data.returnFloatValue(outputIndex) = a>b? a:b;
     }
 };
 

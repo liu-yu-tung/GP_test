@@ -24,6 +24,9 @@ void Shape::getShape() const{
         std::cout << "length=" << lengthOfBuffer << ", width=" << widthOfBuffer << std::endl;
 
 };
+
+
+
 //constructor of differenet type
 bufferInt1D::bufferInt1D(){
     buffer.resize(Const::shapeOfBuffer.getLength(), 0);
@@ -70,6 +73,35 @@ void bufferFloat2D::show(){
     }
 };
 
+//return value of buffer
+int &bufferBase::returnIntValue(std::vector<int> &){
+    std::cerr << "In int &bufferBase::returnIntValue(std::vector<int> &).This buffer doesn't have Int buffer.\n";
+};
+
+float &bufferBase::returnFloatValue(std::vector<int> &){
+    std::cerr << "In float &bufferBase::returnFloatValue(std::vector<int> &).This buffer doesn't have Float buffer.\n";
+};
+
+int &bufferInt1D::returnIntValue(std::vector<int> &index){
+    if(index.size()!=1) std::cerr << "In void *bufferInt1D::returnValue(std::vector<int> &index), index number mismatched\n";
+    return buffer[index[0]];
+};
+
+int &bufferInt2D::returnIntValue(std::vector<int> &index){
+    if(index.size()!=2) std::cerr << "In void *bufferInt2D::returnValue(std::vector<int> &index), index number mismatched\n";
+    return buffer[index[0]][index[1]];
+};
+
+float &bufferFloat1D::returnFloatValue(std::vector<int> &index){
+    if(index.size()!=1) std::cerr << "In void *bufferFloat1D::returnValue(std::vector<int> &index), index number mismatched\n";
+    return buffer[index[0]];
+};
+
+float &bufferFloat2D::returnFloatValue(std::vector<int> &index){
+    if(index.size()!=2) std::cerr << "In void *bufferFloat2D::returnValue(std::vector<int> &index), index number mismatched\n";
+    return buffer[index[0]][index[1]];
+};
+
 //show basic information about data
 void GETINFO(){
     std::cout << "::::::::::INFO of BUFFER::::::::::" << std::endl;
@@ -98,4 +130,12 @@ void Data::show(){
     bufferPtr->show();
 };
 
+
+int &Data::returnIntValue(std::vector<int> &index){
+    return bufferPtr->returnIntValue(index);
+}; 
+
+float &Data::returnFloatValue(std::vector<int> &index){
+    return bufferPtr->returnFloatValue(index);
+}; 
 

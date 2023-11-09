@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 
+class Data;
 class Function{
 friend void setArgument(Function &, std::vector<int> &, std::vector<int> &);
 public:
@@ -15,7 +16,7 @@ public:
 protected:
     static const int arity;
     static const int outputNumber;
-
+    
     virtual int getArity() = 0;
     virtual int getOutputNumber() = 0;
     //for 1-D data, store index once a time. e.g, argumentIndex[0] = index
@@ -30,13 +31,14 @@ class Max2: public Function{
 public:
     static const std::string functionName ;
     std::string getFunctionName() override;
+    void execution(Data &) override;
+
 protected:
     static const int arity;
     static const int outputNumber;
-
     int getArity() override;
     int getOutputNumber() override;
-    void execution(Data &) override;
+    
 };
 
 //to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)

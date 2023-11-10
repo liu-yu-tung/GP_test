@@ -27,7 +27,7 @@ namespace Const{
     static const DataType typeOfBuffer = Int;
     static const Shape shapeOfBuffer = Shape(10, 10);
     
-    static const int maximumTreeHeight = 2;
+    static const int maximumTreeHeight = 3;
     
     enum growMethod{
         grow,
@@ -38,9 +38,10 @@ namespace Const{
 
     enum functionSet{
         Max2,
+        Swap,
         NUM_ENTRIES
     };
-    static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES);
+    static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES-1);
 };
 
 //get basic data info
@@ -85,14 +86,20 @@ public:
     float &returnFloatValue(std::vector<int> &) override;
 };
 
-
 class Data{
     bufferBase* bufferPtr;
 public:
     Data();
     ~Data();
+    static std::vector<bool> isIndexInit1D;
+    static std::vector<std::vector<bool>> isIndexInit2D;
+    static int indexUseNumber;
+    static std::vector<int> indexUse; // one for one indx if one dim, two for one index if two dim.
+    
     void show();
-    int &returnIntValue(std::vector<int> &); 
-    float &returnFloatValue(std::vector<int> &); 
+    int getIntValue(std::vector<int> &); 
+    float getFloatValue(std::vector<int> &);
+    void set(std::vector<int> &, int);
+    void set(std::vector<int> &, float);
 };
 

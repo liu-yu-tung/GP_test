@@ -6,6 +6,9 @@ const int Function::outputNumber = -1;
 const int Max2::arity = 2;
 const int Max2::outputNumber = 1;
 const std::string Max2::functionName = "Max2";
+const int Swap::arity = 2;
+const int Swap::outputNumber = 2;
+const std::string Swap::functionName = "Swap";
 
 void setArgument(Function &function, std::vector<int> &arguments, std::vector<int> &outputs){
     //check if argument number matches
@@ -17,6 +20,7 @@ void setArgument(Function &function, std::vector<int> &arguments, std::vector<in
         std::cerr << function.getFunctionName() << " should get " << function.getOutputNumber()*Const::dimensionOfBuffer<< " arguments\n";
         return;
     } 
+    
     function.argumentIndex = arguments;
     function.outputIndex = outputs;
 };
@@ -61,14 +65,28 @@ void Max2::execution(Data &data){
     std::vector<int> index2(argumentIndex.begin()+Const::dimensionOfBuffer, argumentIndex.begin()+Const::dimensionOfBuffer*2);
     
     if(Const::typeOfBuffer==Int){
-        a = data.returnIntValue(index1);
-        b = data.returnIntValue(index2);
-        data.returnIntValue(outputIndex) = a>b? a:b;
+        a = data.getIntValue(index1);
+        b = data.getIntValue(index2);
     }   
     else if(Const::typeOfBuffer==Float){
-        a = data.returnFloatValue(index1);
-        b = data.returnFloatValue(index2);
-        data.returnFloatValue(outputIndex) = a>b? a:b;
+        a = data.getFloatValue(index1);
+        b = data.getFloatValue(index2);      
     }
+    data.set(outputIndex, a>b? a:b);
 };
 
+std::string Swap::getFunctionName(){
+    return Swap::functionName;
+}
+
+void Swap::execution(Data &){
+    
+};
+
+
+int Swap::getArity(){
+
+};
+    
+int Swap::getOutputNumber(){
+};

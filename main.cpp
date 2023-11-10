@@ -8,13 +8,13 @@ int main(int argc, char** argv) {
     //GETINFO();
     
     Data A;
-    A.show();
+    //A.show();
     std::vector<int> x = {2, 3};
-    A.returnIntValue(x) = 3;
+    A.set(x, 3);
     std::vector<int> y = {3, 4};
-    A.returnIntValue(y) = 5;
+    A.set(y, 5);
     A.show();
-    /*
+    
     //A.returnValue<int>(x) = 3;
     //std::cout << A.returnValue<int>(x);
     Max2 B;
@@ -24,16 +24,17 @@ int main(int argc, char** argv) {
     setArgument(B, index, output);
     B.execution(A);
     A.show();
-    */
-    std::cout << Const::functionSetNumber << std::endl;
+    
+    //std::cout << Const::functionSetNumber << std::endl;
     
     Program C(Const::growMethodGlobal);
-    Function* D = C.randomChooseFunction();
-    std::vector<int> index = {2, 3, 3, 4};
-    std::vector<int> output = {2, 4};
-    setArgument(*D, index, output);
-    std::cout << D->getFunctionName() << std::endl;
-    D->execution(A);
-    A.show();
+    //C.growTree(Const::growMethodGlobal);
+    //std::vector<int> index = {2, 3, 3, 4};
+    //std::vector<int> output = {2, 4};
+    //setArgument(*D, index, output);
+    //std::cout << D->getFunctionName() << std::endl;
+    //D->execution(A);
+    //A.show();
+    C.showTree();
     return 0;
 }

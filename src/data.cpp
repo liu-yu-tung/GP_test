@@ -25,8 +25,6 @@ void Shape::getShape() const{
 
 };
 
-
-
 //constructor of differenet type
 bufferInt1D::bufferInt1D(){
     buffer.resize(Const::shapeOfBuffer.getLength(), 0);
@@ -111,6 +109,10 @@ void GETINFO(){
     std::cout << "::::::::::::::::::::::::::::::::::" << std::endl;
 };
 
+std::vector<bool> Data::isIndexInit1D = std::vector<bool>(Const::shapeOfBuffer.getLength(), false);
+std::vector<std::vector<bool>> Data::isIndexInit2D(Const::shapeOfBuffer.getLength(), std::vector<bool>(Const::shapeOfBuffer.getWidth(), false));
+int Data::indexUseNumber = 0;
+
 Data::Data(){
     if(Const::dimensionOfBuffer==1){
         if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt1D;
@@ -131,11 +133,37 @@ void Data::show(){
 };
 
 
-int &Data::returnIntValue(std::vector<int> &index){
+int Data::getIntValue(std::vector<int> &index){
     return bufferPtr->returnIntValue(index);
 }; 
 
-float &Data::returnFloatValue(std::vector<int> &index){
+float Data::getFloatValue(std::vector<int> &index){
     return bufferPtr->returnFloatValue(index);
 }; 
 
+void Data::set(std::vector<int> &index, int i){
+    bufferPtr->returnIntValue(index) = i;
+    if(Const::typeOfBuffer==1) {
+        isIndexInit1D[index[0]] = true;
+        indexUse.push_back(index[0]);
+    }
+    else if(Const::typeOfBuffer==2) {
+        isIndexInit2D[index[0]][index[1]] = true;
+        indexUse.push_back(index[0]);
+        indexUse.push_back(index[1]);
+    }
+};
+
+void Data::set(std::vector<int> &index, float f){
+    bufferPtr->returnFloatValue(index) = f;
+    indexUseNumber++;
+    if(Const::typeOfBuffer==1){
+        isIndexInit1D[index[0]] = true;
+        indexUse.push_back(index[0]);
+    } 
+    else if(Const::typeOfBuffer==2){
+        isIndexInit2D[index[0]][index[1]] = true;
+        indexUse.push_back(index[0]);
+        indexUse.push_back(index[1]);
+    }
+};

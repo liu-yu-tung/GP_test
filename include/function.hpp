@@ -6,6 +6,7 @@
 
 class Data;
 class Function{
+friend class Program;
 friend void setArgument(Function &, std::vector<int> &, std::vector<int> &);
 public:
     void addChild(Function *);
@@ -29,13 +30,17 @@ protected:
 
 };
 
+//to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)
+void setArgument(Function &, std::vector<int> &);
+
 class Max2: public Function{
 public:
-    static const std::string functionName ;
+    static const std::string functionName;
     std::string getFunctionName() override;
     void execution(Data &) override;
 
 protected:
+    
     static const int arity;
     static const int outputNumber;
     int getArity() override;
@@ -43,6 +48,19 @@ protected:
     
 };
 
-//to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)
-void setArgument(Function &, std::vector<int> &);
+class Swap: public Function{
+public:
+    static const std::string functionName;
+    std::string getFunctionName() override;
+    
+
+protected:
+    void execution(Data &) override;
+    static const int arity;
+    static const int outputNumber;
+    int getArity() override;
+    int getOutputNumber() override;
+};
+
+
 

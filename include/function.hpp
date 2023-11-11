@@ -7,15 +7,19 @@
 class Data;
 class Function{
 friend class Program;
-friend void setArgument(Function &, std::vector<int> &, std::vector<int> &);
 public:
+    Function(Data *);
     void addChild(Function *);
-    void showIO();
+    void show();
     void setHeight(int);
+    int& getInt(std::vector<int> &, int);
+    float& getFloat(std::vector<int> &, int);
+
     virtual std::string getFunctionName() = 0;
-    virtual void execution(Data &) = 0;
+    virtual void execution() = 0;
 
 protected:
+    Data *dataPtr;
     static const int arity;
     static const int outputNumber;
     int height;
@@ -27,17 +31,18 @@ protected:
     std::vector<int> argumentIndex;
     std::vector<int> outputIndex;
     std::vector<Function *> children;
+public:
+    //to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)
+    void setArgument(std::vector<int> &, std::vector<int> &);
 
 };
 
-//to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)
-void setArgument(Function &, std::vector<int> &);
-
 class Max2: public Function{
 public:
+    Max2(Data *);
     static const std::string functionName;
     std::string getFunctionName() override;
-    void execution(Data &) override;
+    void execution() override;
 
 protected:
     
@@ -50,12 +55,13 @@ protected:
 
 class Swap: public Function{
 public:
+    Swap(Data *);
     static const std::string functionName;
     std::string getFunctionName() override;
     
 
 protected:
-    void execution(Data &) override;
+    void execution() override;
     static const int arity;
     static const int outputNumber;
     int getArity() override;

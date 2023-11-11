@@ -72,12 +72,12 @@ void bufferFloat2D::show(){
 };
 
 //return value of buffer
-int &bufferBase::returnIntValue(std::vector<int> &){
-    std::cerr << "In int &bufferBase::returnIntValue(std::vector<int> &).This buffer doesn't have Int buffer.\n";
+int &bufferBase::returnIntValue(std::vector<int> &index){
+    if(index.size()!=1) std::cerr << "In int &bufferBase::returnIntValue(std::vector<int> &index), index number mismatched\n";
 };
 
-float &bufferBase::returnFloatValue(std::vector<int> &){
-    std::cerr << "In float &bufferBase::returnFloatValue(std::vector<int> &).This buffer doesn't have Float buffer.\n";
+float &bufferBase::returnFloatValue(std::vector<int> &index){
+    if(index.size()!=1) std::cerr << "In float &bufferBase::returnFloatValue(std::vector<int> &index), index number mismatched\n";
 };
 
 int &bufferInt1D::returnIntValue(std::vector<int> &index){
@@ -109,11 +109,11 @@ void GETINFO(){
     std::cout << "::::::::::::::::::::::::::::::::::" << std::endl;
 };
 
-std::vector<bool> Data::isIndexInit1D = std::vector<bool>(Const::shapeOfBuffer.getLength(), false);
-std::vector<std::vector<bool>> Data::isIndexInit2D(Const::shapeOfBuffer.getLength(), std::vector<bool>(Const::shapeOfBuffer.getWidth(), false));
-int Data::indexUseNumber = 0;
-
-Data::Data(){
+Data::Data():
+    isIndexInit1D(std::vector<bool>(Const::shapeOfBuffer.getLength(), false)),
+    isIndexInit2D(std::vector<std::vector<bool>>(Const::shapeOfBuffer.getLength(), std::vector<bool>(Const::shapeOfBuffer.getWidth(), false))),
+    indexUseNumber(0)
+{
     if(Const::dimensionOfBuffer==1){
         if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt1D;
         else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat1D;
@@ -124,30 +124,74 @@ Data::Data(){
     }
 };
 
+Data::Data(const Data &givenData):
+isIndexInit1D(givenData.isIndexInit1D), isIndexInit2D(givenData.isIndexInit2D), indexUseNumber(givenData.indexUseNumber), indexUse(givenData.indexUse)
+{
+    std::vector<int> index;
+    if(Const::dimensionOfBuffer==1){
+        for(int i=0; i<indexUseNumber; i++){
+            index.assign(indexUse.begin()+i, indexUse.begin()+i+1);
+            if(Const::typeOfBuffer==Int) {
+                bufferPtr = new bufferInt1D;
+                bufferPtr->returnIntValue(index) = givenData.bufferPtr->returnIntValue(index);
+            }
+            else if(Const::typeOfBuffer==Float) {
+                bufferPtr = new bufferFloat1D;
+                bufferPtr->returnFloatValue(index) = givenData.bufferPtr->returnFloatValue(index);
+            }
+        }
+    }
+    else if(Const::dimensionOfBuffer==2)  {
+        for(int i=0; i<indexUseNumber; i++){
+            index.assign(indexUse.begin()+2*i, indexUse.begin()+2*i+2);
+            if(Const::typeOfBuffer==Int) {
+                bufferPtr = new bufferInt2D;
+                bufferPtr->returnIntValue(index) = givenData.bufferPtr->returnIntValue(index);
+            }
+            else if(Const::typeOfBuffer==Float) {
+                bufferPtr = new bufferFloat2D;
+                bufferPtr->returnFloatValue(index) = givenData.bufferPtr->returnFloatValue(index);
+            }
+        }
+    }
+};
+
 Data::~Data(){
     delete bufferPtr;
+};
+
+int Data::getIndexUseNumber(){
+    return indexUseNumber;
 };
 
 void Data::show(){
     bufferPtr->show();
 };
 
-
-int Data::getIntValue(std::vector<int> &index){
-    return bufferPtr->returnIntValue(index);
+int &Data::getIntValue(std::vector<int> &index, int order){
+    order--;
+    std::vector<int> v;
+    if(Const::dimensionOfBuffer==1) v.push_back(index[order]);
+    else if(Const::dimensionOfBuffer==2) v.assign(index.begin()+2*order, index.begin()+2*order+2);
+    return bufferPtr->returnIntValue(v);
 }; 
 
-float Data::getFloatValue(std::vector<int> &index){
-    return bufferPtr->returnFloatValue(index);
+float &Data::getFloatValue(std::vector<int> &index, int order){
+    order--;
+    std::vector<int> v;
+    if(Const::dimensionOfBuffer==1) v.push_back(index[order]);
+    else if(Const::dimensionOfBuffer==2) v.assign(index.begin()+2*order, index.begin()+2*order+2);
+    return bufferPtr->returnFloatValue(v);
 }; 
 
 void Data::set(std::vector<int> &index, int i){
     bufferPtr->returnIntValue(index) = i;
-    if(Const::typeOfBuffer==1) {
+    indexUseNumber++;
+    if(Const::dimensionOfBuffer==1) {
         isIndexInit1D[index[0]] = true;
         indexUse.push_back(index[0]);
     }
-    else if(Const::typeOfBuffer==2) {
+    else if(Const::dimensionOfBuffer==2) {
         isIndexInit2D[index[0]][index[1]] = true;
         indexUse.push_back(index[0]);
         indexUse.push_back(index[1]);
@@ -157,13 +201,30 @@ void Data::set(std::vector<int> &index, int i){
 void Data::set(std::vector<int> &index, float f){
     bufferPtr->returnFloatValue(index) = f;
     indexUseNumber++;
-    if(Const::typeOfBuffer==1){
+    if(Const::dimensionOfBuffer==1){
         isIndexInit1D[index[0]] = true;
         indexUse.push_back(index[0]);
     } 
-    else if(Const::typeOfBuffer==2){
+    else if(Const::dimensionOfBuffer==2){
         isIndexInit2D[index[0]][index[1]] = true;
         indexUse.push_back(index[0]);
         indexUse.push_back(index[1]);
     }
 };
+
+void Data::setAvailable(int i){
+    if(!isIndexInit1D[i]){
+        indexUseNumber++;
+        indexUse.push_back(i);
+        isIndexInit1D[i] = true;
+    }
+};  
+
+void Data::setAvailable(int i, int j){
+    if(!isIndexInit2D[i][j]){
+        indexUseNumber++;
+        indexUse.push_back(i);
+        indexUse.push_back(j);
+        isIndexInit2D[i][j] = true;
+    }
+};  

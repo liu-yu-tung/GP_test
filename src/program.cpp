@@ -1,10 +1,12 @@
 #include "../include/program.hpp"
 
-Program::Program(Const::growMethod method){
+Program::Program(Const::growMethod method, Data &data){
+    dataPtr = new Data(data);
     growTree(method);
 };
 
 Program::~Program(){
+    delete dataPtr;
     for(Function *f:tree) delete f;
 };
 
@@ -24,7 +26,7 @@ void Program::growTree(Const::growMethod method){
     }
 
     // Fill in the argument of tree
-    
+    //fillArgument();
     
 };
 
@@ -50,46 +52,61 @@ Function *Program::createFunction(int functionNumber, int height){
     Function* f;
     functionNumber--;
     if(functionNumber==Const::functionSet::Max2){
-        f = new Max2;
+        f = new Max2(dataPtr);
     }
     else if(functionNumber==Const::functionSet::Swap){
-        f = new Swap;
+        f = new Swap(dataPtr);
     }
     f->setHeight(height);
     return f;
 };
 
 void Program::fillArgument(){
-    std::vector<bool> isIndexInit1D = Data::isIndexInit1D;
-    std::vector<std::vector<bool>> isIndexInit2D = Data::isIndexInit2D;
     std::random_device rd; 
     std::mt19937 gen(rd()); 
-    std::uniform_int_distribution<int> distributionIndex(0, Data::indexUseNumber);
-    std::uniform_int_distribution<int> distributionOutputLength(0, Const::shapeOfBuffer.getLength());
-    if(Const::dimensionOfBuffer==2) std::uniform_int_distribution<int> distributionOutputWidth(0, Const::shapeOfBuffer.getWidth());
+    std::uniform_int_distribution<int> distributionOutputLength(0, Const::shapeOfBuffer.getLength()-1);
+    std::uniform_int_distribution<int> distributionOutputWidth(0, Const::shapeOfBuffer.getWidth()-1);
     
     int arity;
-
     // For differnet dimension, random choose index of each function by prefix and rechoose if not 
     if(Const::dimensionOfBuffer==1){
-        for(Function* f:tree){    
+        for(Function* f:tree){      
+            std::uniform_int_distribution<int> distributionIndex(0, dataPtr->getIndexUseNumber()-1);
             std::vector<int> index;
             std::vector<int> output;
-            for(int i=0; i<f->getArity(); i++) index.push_back(distributionIndex(gen));
+            for(int i=0; i<f->getArity(); i++) index.push_back(dataPtr->indexUse[distributionIndex(gen)]);  //draw from already available index
             for(int i=0; i<f->getOutputNumber(); i++) {
-                int outIndex = distributionOutputLength(gen);
-                output.push_back(outIndex);
-                isIndexInit1D[outIndex] = true;
-            } //isIndexInit1D maintainence?
+                int outIndex = distributionOutputLength(gen); //draw from all possible index = length of data
+                output.push_back(outIndex); 
+                dataPtr->setAvailable(outIndex);
+            } 
+            f->setArgument(index, output);
         }
     }
     else if(Const::dimensionOfBuffer==2){
-        
+        for(Function* f:tree){      
+            std::uniform_int_distribution<int> distributionIndex(0, dataPtr->getIndexUseNumber()-1);
+            std::vector<int> index;
+            std::vector<int> output;
+            for(int i=0; i<f->getArity(); i++){
+                //draw from already available index
+                int indexNum = distributionIndex(gen);
+                std::cout << "here" << dataPtr->getIndexUseNumber();
+                index.push_back(dataPtr->indexUse[indexNum*2]);
+                index.push_back(dataPtr->indexUse[indexNum*2+1]);
+            }
+            for(int i=0; i<f->getOutputNumber(); i++){
+                int outIndexL = distributionOutputLength(gen); //draw from all possible index = length of data
+                int outIndexW = distributionOutputWidth(gen);
+                output.push_back(outIndexL); 
+                output.push_back(outIndexW); 
+                dataPtr->setAvailable(outIndexL, outIndexW);
+            } 
+            f->setArgument(index, output);
+        }
     }
-
-
 };
 
 void Program::showTree(){
-    for(Function* item:tree) std::cout << item->getFunctionName() << ": height " << item->height << std::endl;
+    for(Function* item:tree) item->show();
 };

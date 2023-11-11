@@ -87,19 +87,30 @@ public:
 };
 
 class Data{
-    bufferBase* bufferPtr;
+friend class Function;
 public:
     Data();
+    Data(const Data &);
     ~Data();
-    static std::vector<bool> isIndexInit1D;
-    static std::vector<std::vector<bool>> isIndexInit2D;
-    static int indexUseNumber;
-    static std::vector<int> indexUse; // one for one indx if one dim, two for one index if two dim.
-    
+
+    int getIndexUseNumber();
+    std::vector<int> indexUse;
+
     void show();
-    int getIntValue(std::vector<int> &); 
-    float getFloatValue(std::vector<int> &);
     void set(std::vector<int> &, int);
     void set(std::vector<int> &, float);
+    void setAvailable(int);
+    void setAvailable(int, int);
+
+    int &getIntValue(std::vector<int> &, int); 
+    float &getFloatValue(std::vector<int> &, int);
+
+
+private:
+    bufferBase* bufferPtr;
+    int indexUseNumber;
+
+    std::vector<bool> isIndexInit1D;
+    std::vector<std::vector<bool>> isIndexInit2D;
 };
 

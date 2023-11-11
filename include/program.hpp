@@ -8,18 +8,19 @@
 class Program{
     Function *rootOfTree;
     std::list<Function*> tree;
-    
+    Data* dataPtr;
     //to make program get specific function
     Function* createFunction(int, int);
     Function *randomChooseFunction(int);
 
     void grow(Function *, int);
     void growTree(Const::growMethod);
-    void fillArgument();
+
 
 public:
-    Program(Const::growMethod);
+    Program(Const::growMethod, Data &);
     ~Program();
     void showTree();
+    void fillArgument();
 };
 

@@ -13,21 +13,25 @@ int main(int argc, char** argv) {
     A.set(x, 3);
     std::vector<int> y = {3, 4};
     A.set(y, 5);
-    A.show();
-    
+    //A.show();
+
     //A.returnValue<int>(x) = 3;
     //std::cout << A.returnValue<int>(x);
-    Max2 B;
+    /*Max2 B(&A);
     
     std::vector<int> index = {2, 3, 3, 4};
     std::vector<int> output = {2, 4};
-    setArgument(B, index, output);
-    B.execution(A);
-    A.show();
+    B.setArgument(index, output);
+    B.execution();
+    */
+    //A.show();
     
     //std::cout << Const::functionSetNumber << std::endl;
     
-    Program C(Const::growMethodGlobal);
+    Program C(Const::growMethodGlobal, A);
+    C.showTree();
+    C.fillArgument();
+    //C.showTree();
     //C.growTree(Const::growMethodGlobal);
     //std::vector<int> index = {2, 3, 3, 4};
     //std::vector<int> output = {2, 4};

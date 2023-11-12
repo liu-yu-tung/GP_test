@@ -7,7 +7,7 @@ const int Max2::arity = 2;
 const int Max2::outputNumber = 1;
 const std::string Max2::functionName = "Max2";
 const int Swap::arity = 2;
-const int Swap::outputNumber = 2;
+const int Swap::outputNumber = 0;
 const std::string Swap::functionName = "Swap";
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
@@ -93,7 +93,17 @@ std::string Swap::getFunctionName(){
 }
 
 void Swap::execution(){
-    
+    int temp; 
+    if(Const::typeOfBuffer==Int){
+        temp = dataPtr->getIntValue(argumentIndex, 1);
+        dataPtr->getIntValue(argumentIndex, 1) = dataPtr->getIntValue(argumentIndex, 2);
+        dataPtr->getIntValue(argumentIndex, 2) = temp;
+    }   
+    else if(Const::typeOfBuffer==Float){
+        temp = dataPtr->getFloatValue(argumentIndex, 1);
+        dataPtr->getFloatValue(argumentIndex, 1) = dataPtr->getFloatValue(argumentIndex, 2);
+        dataPtr->getFloatValue(argumentIndex, 2) = temp;
+    }
 };
 
 

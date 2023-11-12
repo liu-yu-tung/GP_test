@@ -24,10 +24,8 @@ void Program::growTree(Const::growMethod method){
     if(method==Const::full){
         grow(rootOfTree, 1);
     }
-
     // Fill in the argument of tree
-    //fillArgument();
-    
+    fillArgument();
 };
 
 void Program::grow(Function *f, int height){
@@ -91,7 +89,6 @@ void Program::fillArgument(){
             for(int i=0; i<f->getArity(); i++){
                 //draw from already available index
                 int indexNum = distributionIndex(gen);
-                std::cout << "here" << dataPtr->getIndexUseNumber();
                 index.push_back(dataPtr->indexUse[indexNum*2]);
                 index.push_back(dataPtr->indexUse[indexNum*2+1]);
             }
@@ -104,6 +101,13 @@ void Program::fillArgument(){
             } 
             f->setArgument(index, output);
         }
+    }
+};
+void Program::execution(){
+    dataPtr->show();
+    for(Function *f:tree){
+        f->execution();
+        dataPtr->show();
     }
 };
 

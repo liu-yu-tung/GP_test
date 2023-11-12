@@ -58,10 +58,10 @@ public:
     Swap(Data *);
     static const std::string functionName;
     std::string getFunctionName() override;
-    
+    void execution() override;
 
 protected:
-    void execution() override;
+
     static const int arity;
     static const int outputNumber;
     int getArity() override;

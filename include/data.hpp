@@ -25,9 +25,9 @@ public:
 namespace Const{
     static const int dimensionOfBuffer = 2;
     static const DataType typeOfBuffer = Int;
-    static const Shape shapeOfBuffer = Shape(10, 10);
+    static const Shape shapeOfBuffer = Shape(3, 3);
     
-    static const int maximumTreeHeight = 3;
+    static const int maximumTreeHeight = 2;
     
     enum growMethod{
         grow,

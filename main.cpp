@@ -7,38 +7,17 @@ int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );
     //GETINFO();
     
-    Data A;
-    //A.show();
-    std::vector<int> x = {2, 3};
-    A.set(x, 3);
-    std::vector<int> y = {3, 4};
-    A.set(y, 5);
-    //A.show();
+    Data data;
+    std::vector<int> x = {1, 1};
+    std::vector<int> y = {2, 2};
+    data.set(x, 4);
+    data.set(y, 5);
+    //data.show();
+    Data dataA(data);
+    //dataA.show();
 
-    //A.returnValue<int>(x) = 3;
-    //std::cout << A.returnValue<int>(x);
-    /*Max2 B(&A);
-    
-    std::vector<int> index = {2, 3, 3, 4};
-    std::vector<int> output = {2, 4};
-    B.setArgument(index, output);
-    B.execution();
-    */
-    //A.show();
-    
-    //std::cout << Const::functionSetNumber << std::endl;
-    
-    Program C(Const::growMethodGlobal, A);
-    C.showTree();
-    C.fillArgument();
-    //C.showTree();
-    //C.growTree(Const::growMethodGlobal);
-    //std::vector<int> index = {2, 3, 3, 4};
-    //std::vector<int> output = {2, 4};
-    //setArgument(*D, index, output);
-    //std::cout << D->getFunctionName() << std::endl;
-    //D->execution(A);
-    //A.show();
-    C.showTree();
+    Program program(Const::growMethodGlobal, data);
+    program.showTree();
+    program.execution();
     return 0;
 }

@@ -155,7 +155,6 @@ int Data::getIndexUseNumber(){
 };
 
 void Data::show(){
-    std::cout << "indexUseNumber" << indexUseNumber << std::endl;
     bufferPtr->show();
 };
 

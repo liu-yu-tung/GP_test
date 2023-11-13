@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <stdio.h>
+#include <cmath>
 
 enum DataType{
     Int,
@@ -27,14 +28,15 @@ namespace Const{
     static const DataType typeOfBuffer = Int;
     static const Shape shapeOfBuffer = Shape(3, 3);
     
-    static const int maximumTreeHeight = 2;
+    static const int maximumTreeHeight = 3;
+    static constexpr int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
     
     enum growMethod{
         grow,
         full,
         half_half
     };
-    
+
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{

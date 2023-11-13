@@ -4,23 +4,44 @@
 #include "program.hpp"
 #include "fitness.hpp"
 #include <vector>
+#include <random>
+#include <string>
 
 class GP{
-    static const int populationTotal;
+    int totalFitness;
+    float totalInverseFitness;
+    int largestFitness;
+    Program* finalProgram;
+    bool finish;
     static Data *data;
+    static const int populationTotal;
+    static const int maximumGeneration;
     std::vector<Program*> population;
+    std::vector<int> fitnessAccumulation;
+    std::vector<float> fitnessInverseAccumulation;
     std::vector<int> fitness;
+    
 
 public:
     GP();
     ~GP();
+    std::vector<int> prefixReference;
     static const Const::Mission mission;
     void setData(int, int);
     void setData(int, int, int);
     void setData(int, float);
     void setData(int, int, float);
     void generatePopulation();
+    void generatePrefix(int, int &);
     void evaluation();
+    int weightedSelect();
+    void reproduce(int, int);
+    void selection();
     void swap(int, int, int, int, int, int);
     void show();
+    void showData();
+    void deleteRandom();
+    void initialize();
+    void run();
+
 };

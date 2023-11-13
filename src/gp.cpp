@@ -1,13 +1,16 @@
 #include "../include/gp.hpp"
 const Const::Mission GP::mission = Const::Mission::Sorting;
-const int GP::populationTotal = 5;
-
+const int GP::populationTotal = 10;
+const int GP::maximumGeneration = 500;
 
 Data *GP::data;
 
 GP::GP(){
+    largestFitness = 0;
     data = new Data();
-    data->show();
+    prefixReference.resize(Const::fullTreeNodeNumber);
+    int count = 0;
+    generatePrefix(0, count);
 };
 
 GP::~GP(){
@@ -61,29 +64,155 @@ void GP::generatePopulation(){
         }
     }
     else if(Const::growMethodGlobal==Const::growMethod::half_half){}
+    std::cout << "Generate Population Done\n";
 };
 
 void GP::evaluation(){
+    finish=false;
+    totalFitness=0;
+    totalInverseFitness=0;
+    fitnessAccumulation.resize(0);
+    fitnessInverseAccumulation.resize(0);
+
+    int fit;
+    int index=0;
     for(Program* program:population) {
         program->execution();
         if(mission==Const::Mission::Sorting){
             Sorting sort(program->dataPtr);
-            fitness.push_back(sort.evaluation());
+            fit=sort.evaluation();
+            if(sort.finish) finish=true;
+            fitness.push_back(fit);
+            totalFitness+=fit;
         }
+        
+        if(fit>largestFitness){
+            finalProgram = program;
+            largestFitness = fit;
+        }
+        fitnessAccumulation.push_back(totalFitness);
+        fitnessInverseAccumulation.push_back(1/totalFitness);
+        index++;
     }
+    std::string missionName;
+    if(mission==Const::Mission::Sorting) missionName = "Sorting";
+    std::cout << "Evalutaion Done: Mission type " << missionName << "\n";
 };
+
+int GP::weightedSelect(){
+    if (fitnessAccumulation.empty()) {
+        std::cerr << "Error: Empty vector\n";
+        return -1;  
+    }
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distribution(0, totalFitness);
+    int randomNumber = distribution(gen);
+
+    for (int i=0; i<populationTotal; i++){
+        if (randomNumber <= fitnessAccumulation[i])
+            return i;
+    }
+    std::cerr << "Error: Unable to make a choice\n";
+    return -1;
+}
 
 void GP::show(){
     for(Program* program:population) program->showTree();
 };
 
+void GP::showData(){
+    std::cout << "Your gp's data is set as shown below:\n";
+    data->show();
+};
+
+void GP::deleteRandom(){
+    if (fitnessInverseAccumulation.empty()) {
+        std::cerr << "Error: Empty vector\n";  
+    }
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> distribution(0, totalInverseFitness);
+    float randomNumber = distribution(gen);
+
+    int index;
+    for (int i=0; i<populationTotal; i++){
+        if (randomNumber < fitnessInverseAccumulation[i]){
+            index = i;
+            break;
+        }
+    }
+    population.erase(population.begin()+index, population.begin()+index+1);
+};
+
 void GP::swap(int index1, int begin1, int end1, int index2, int begin2, int end2){
     std::vector<Function*> temp;
-    Program* f1=population[index1];
-    Program* f2=population[index2];
-    temp.assign(f1->tree.begin()+begin1, f1->tree.begin()+end1);
-    f1->tree.erase(f1->tree.begin()+begin1, f1->tree.begin()+end1);
-    f1->tree.insert(f1->tree.begin()+begin1, f2->tree.begin()+begin2, f2->tree.begin()+end2);
-    f2->tree.erase(f1->tree.begin()+begin2, f2->tree.begin()+end2);
-    f2->tree.insert(f2->tree.begin()+begin2, temp.begin(), temp.end());
+    std::vector<Function*> &f1=population[index1]->tree;
+    std::vector<Function*> &f2=population[index2]->tree;
+    std::swap_ranges(f1.begin()+begin1, f1.begin()+end1+1, f2.begin()+begin2);
+};
+
+void GP::generatePrefix(int num, int &count){
+    if((num+1)*2 <= Const::fullTreeNodeNumber){
+        generatePrefix((num+1)*2-1, count);
+        generatePrefix((num+1)*2, count);
+    }
+    prefixReference[num] = count;
+    count++;
+};
+
+void GP::reproduce(int index1, int index2){
+    if(Const::growMethodGlobal==Const::growMethod::full){
+        std::random_device rd; 
+        std::mt19937 gen(rd()); 
+        std::uniform_int_distribution<int> randomNode(1, Const::fullTreeNodeNumber);
+        int node = randomNode(gen);
+        int begin = node;
+        int end = prefixReference[node-1];
+
+        while(2*begin<=Const::fullTreeNodeNumber) begin *= 2;
+        begin=prefixReference[begin-1];
+        //std::cout << begin << " " << end << "\n";
+        swap(index1, begin, end, index2, begin, end);
+    }
+};
+
+void GP::selection(){
+    int program1 = weightedSelect();
+    int program2 = weightedSelect();
+    //std::cout << "Program 1 index: " << program1 << std::endl;
+    //std::cout << "Program 2 index: " << program2 << std::endl;
+    reproduce(program1, program2);
+};
+
+void GP::initialize(){
+    generatePopulation();
+
+};
+
+void GP::run(){
+    for(int i=1; i<=maximumGeneration; i++){
+        if(population.size()==0){
+            std::cout << "No program" << std::endl;
+            break;
+        }
+        evaluation();
+        std::cout << "Generation: " << i << "\n";
+        std::cout << "Largest Fitness = " << largestFitness <<"\n";
+
+        if(finish){      
+            std::cout << "Terminate Early! This is the final Program:\n";
+            finalProgram->showTree();
+            std::cout << "Fitness: " << largestFitness << "\n";
+            break;
+        }
+        for(int i=0; i<20; i++) 
+            selection();
+        deleteRandom();
+        
+        std::cout << population.size() << " program remained" <<"\n";
+    }
+    std::cout << "This is the final Program:\n";
+    finalProgram->showTree();
+    std::cout << "Fitness: " << largestFitness << "\n";
 };

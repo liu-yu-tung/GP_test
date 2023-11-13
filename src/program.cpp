@@ -109,10 +109,8 @@ void Program::fillArgument(){
     }
 };
 void Program::execution(){
-    dataPtr->show();
     for(Function *f:tree){
         f->execution();
-        dataPtr->show();
     }
 };
 

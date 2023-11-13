@@ -4,7 +4,8 @@
 class Fitness{
 public:
     Fitness(Data*);
-    virtual int evaluation() = 0; 
+    virtual int evaluation() = 0;
+    bool finish; 
 protected:
     Data* dataPtr;
 };

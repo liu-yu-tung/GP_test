@@ -1,5 +1,5 @@
 #include "../include/fitness.hpp"
-Fitness::Fitness(Data* d): dataPtr(d){};
+Fitness::Fitness(Data* d): dataPtr(d), finish(false){};
 
 Sorting::Sorting(Data *d): Fitness(d){};
 
@@ -17,6 +17,7 @@ int Sorting::evaluation(){
                     if(dataPtr->getFloatValue(i)>dataPtr->getFloatValue(j)) score--; 
             }
         } 
+        if(score==l*(l-1)/2) finish=true;
     }
     else if(Const::dimensionOfBuffer==2){
         int l = Const::shapeOfBuffer.getLength();
@@ -40,7 +41,11 @@ int Sorting::evaluation(){
                     }
                 }    
             }
-        }       
+        } 
+        if(score==(l*w)*((l*w)-1)/2){
+            finish=true;      
+        }
     }
+
     return score;
 };

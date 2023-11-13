@@ -60,6 +60,10 @@ Function *Program::createFunction(int functionNumber, int height){
 };
 
 void Program::fillArgument(){
+    if(dataPtr->getIndexUseNumber()==0) {
+        std::cerr << "no Data provide\n";
+        return;
+    }
     std::random_device rd; 
     std::mt19937 gen(rd()); 
     std::uniform_int_distribution<int> distributionOutputLength(0, Const::shapeOfBuffer.getLength()-1);
@@ -67,6 +71,7 @@ void Program::fillArgument(){
     
     int arity;
     // For differnet dimension, random choose index of each function by prefix and rechoose if not 
+
     if(Const::dimensionOfBuffer==1){
         for(Function* f:tree){      
             std::uniform_int_distribution<int> distributionIndex(0, dataPtr->getIndexUseNumber()-1);

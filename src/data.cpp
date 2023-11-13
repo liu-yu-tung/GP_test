@@ -175,6 +175,32 @@ float &Data::getFloatValue(std::vector<int> &index, int order){
     return bufferPtr->returnFloatValue(v);
 }; 
 
+int &Data::getIntValue(int x){
+    std::vector<int> index;
+    index.push_back(x);
+    return getIntValue(index, 1);                                         
+}; 
+
+int &Data::getIntValue(int x, int y){
+    std::vector<int> index;
+    index.push_back(x);
+    index.push_back(y);
+    return getIntValue(index, 1);       
+}; 
+
+float &Data::getFloatValue(int x){
+    std::vector<int> index;
+    index.push_back(x);
+    return getFloatValue(index, 1);     
+};
+
+float &Data::getFloatValue(int x, int y){
+    std::vector<int> index;
+    index.push_back(x);
+    index.push_back(y);
+    return getFloatValue(index, 1);    
+};
+    
 void Data::set(std::vector<int> &index, int i){
     bufferPtr->returnIntValue(index) = i;
     if(Const::dimensionOfBuffer==1) setAvailable(index[0]);

@@ -42,6 +42,11 @@ namespace Const{
         NUM_ENTRIES
     };
     static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES-1);
+
+    enum Mission{
+        Sorting,
+        NUM_ENTRIES_MISSION
+    };
 };
 
 //get basic data info
@@ -105,6 +110,10 @@ public:
     int &getIntValue(std::vector<int> &, int); 
     float &getFloatValue(std::vector<int> &, int);
 
+    int &getIntValue(int); 
+    int &getIntValue(int, int); 
+    float &getFloatValue(int);
+    float &getFloatValue(int, int);
 
 private:
     bufferBase* bufferPtr;

@@ -21,5 +21,6 @@ public:
     void setData(int, int, float);
     void generatePopulation();
     void evaluation();
+    void swap(int, int, int, int, int, int);
     void show();
 };

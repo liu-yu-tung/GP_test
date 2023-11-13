@@ -5,33 +5,42 @@ Sorting::Sorting(Data *d): Fitness(d){};
 
 //ascending
 int Sorting::evaluation(){
-    bool isSorted = true;
+    int score;
     if(Const::dimensionOfBuffer==1){
         int l = Const::shapeOfBuffer.getLength();
-        for(int i=0; i<l-1; i++){
-            if(Const::typeOfBuffer==Int)
-                if(dataPtr->getIntValue(i)>dataPtr->getIntValue(i+1)) isSorted=false;
-            else if(Const::typeOfBuffer==Float)
-                if(dataPtr->getFloatValue(i)>dataPtr->getFloatValue(i+1)) isSorted=false;
-        }
+        score = l*(l-1)/2;   
+        for(int i=0; i<l; i++){
+            for(int j=i+1; j<l; j++){
+                if(Const::typeOfBuffer==Int)
+                    if(dataPtr->getIntValue(i)>dataPtr->getIntValue(j)) score--;
+                if(Const::typeOfBuffer==Float)
+                    if(dataPtr->getFloatValue(i)>dataPtr->getFloatValue(j)) score--; 
+            }
+        } 
     }
     else if(Const::dimensionOfBuffer==2){
         int l = Const::shapeOfBuffer.getLength();
         int w = Const::shapeOfBuffer.getWidth();
-        for(int i=0; i<l-1; i++){
-            for(int j=0; j<w-1; j++){
-                if(Const::typeOfBuffer==Int){
-                    if(dataPtr->getIntValue(i, j)>dataPtr->getIntValue(i, j+1)) isSorted=false;
-                    if(j+1==w-1 && dataPtr->getIntValue(i, w-1)>dataPtr->getIntValue(i+1, 0)) isSorted=false;
-                }
-                else if(Const::typeOfBuffer==Float){
-                    if(dataPtr->getFloatValue(i, j)>dataPtr->getFloatValue(i, j+1)) isSorted=false;
-                    if(j+1==w-1 && dataPtr->getIntValue(i, w-1)>dataPtr->getIntValue(i+1, 0)) isSorted=false;
-                }
-            }
-        }        
-    }
 
-    if(isSorted) return 1;
-    else return 0;
+        score = (l*w)*((l*w)-1)/2;  
+        for(int i=0; i<l; i++){
+            for(int j=0; j<w; j++){
+                for(int x=j+1; x<w; x++){
+                    if(Const::typeOfBuffer==Int)
+                        if(dataPtr->getIntValue(i, j)>dataPtr->getIntValue(i, x)) score--;
+                    if(Const::typeOfBuffer==Float)
+                        if(dataPtr->getFloatValue(i, j)>dataPtr->getFloatValue(i, x)) score--; 
+                }
+                for(int y=i+1; y<l; y++){
+                    for(int z=0; z<w; z++){
+                        if(Const::typeOfBuffer==Int)
+                            if(dataPtr->getIntValue(i, j)>dataPtr->getIntValue(y, z)) score--;
+                        if(Const::typeOfBuffer==Float)
+                            if(dataPtr->getFloatValue(i, j)>dataPtr->getFloatValue(y, z)) score--; 
+                    }
+                }    
+            }
+        }       
+    }
+    return score;
 };

@@ -6,8 +6,9 @@
 #include <random>
 
 class Program{
+friend class GP;
     Function *rootOfTree;
-    std::list<Function*> tree;
+    std::vector<Function*> tree;
 
     //to make program get specific function
     Function* createFunction(int, int);

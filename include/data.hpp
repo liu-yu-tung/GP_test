@@ -34,6 +34,7 @@ namespace Const{
         full,
         half_half
     };
+    
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{

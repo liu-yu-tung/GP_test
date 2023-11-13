@@ -10,7 +10,6 @@ protected:
 };
 
 class Sorting: public Fitness{
-    int a;
 public: 
     Sorting(Data*);
     int evaluation() override;

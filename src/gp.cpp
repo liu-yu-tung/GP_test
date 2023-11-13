@@ -76,3 +76,14 @@ void GP::evaluation(){
 void GP::show(){
     for(Program* program:population) program->showTree();
 };
+
+void GP::swap(int index1, int begin1, int end1, int index2, int begin2, int end2){
+    std::vector<Function*> temp;
+    Program* f1=population[index1];
+    Program* f2=population[index2];
+    temp.assign(f1->tree.begin()+begin1, f1->tree.begin()+end1);
+    f1->tree.erase(f1->tree.begin()+begin1, f1->tree.begin()+end1);
+    f1->tree.insert(f1->tree.begin()+begin1, f2->tree.begin()+begin2, f2->tree.begin()+end2);
+    f2->tree.erase(f1->tree.begin()+begin2, f2->tree.begin()+end2);
+    f2->tree.insert(f2->tree.begin()+begin2, temp.begin(), temp.end());
+};

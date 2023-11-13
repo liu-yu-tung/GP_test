@@ -14,21 +14,32 @@ int main(int argc, char** argv) {
     gp.generatePopulation();
     gp.show();
     */
+
+    
     std::vector<int> x={1, 1};
     std::vector<int> y={1, 2};
     std::vector<int> z={2, 0};
     std::vector<int> w={2, 1};
     std::vector<int> s={2, 2};
     Data data;
-    data.set(x, 1);
-    data.set(y, 3);
-    data.set(z, 5);
-    data.set(w, 7);
-    data.set(s, 8);
+    data.set(x, 5);
+    data.set(y, 2);
+    data.set(z, 3);
+    data.set(w, 4);
+    data.set(s, 1);
+
+    
     data.show();
     Sorting C(&data);
     std::cout << C.evaluation() << std::endl;
+    data.show();
+/*
+    Program p(Const::growMethodGlobal, data);
+    p.showTree();
+    p.execution();
 
+    p.dataPtr->show();
+*/
 
     return 0;
 }

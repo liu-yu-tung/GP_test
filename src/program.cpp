@@ -114,6 +114,11 @@ void Program::execution(){
     }
 };
 
+void Program::changeData(Data& data){
+    delete dataPtr;
+    this->dataPtr = new Data(data);
+};  
+
 void Program::showTree(){
     for(Function* item:tree) item->show();
 };

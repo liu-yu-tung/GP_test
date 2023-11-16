@@ -1,20 +1,19 @@
 #include "../include/gp.hpp"
 const Const::Mission GP::mission = Const::Mission::Sorting;
 const int GP::populationTotal = 10;
-const int GP::maximumGeneration = 500;
+const int GP::maximumGeneration = 10;
 
-Data *GP::data;
+std::unique_ptr<Data> GP::data;
 
 GP::GP(){
     largestFitness = 0;
-    data = new Data();
+    data = std::make_unique<Data>();
     prefixReference.resize(Const::fullTreeNodeNumber);
     int count = 0;
     generatePrefix(0, count);
 };
 
 GP::~GP(){
-    delete data;
     for(Program* program:population) delete program;
 };
 
@@ -68,6 +67,7 @@ void GP::generatePopulation(){
 };
 
 void GP::evaluation(){
+
     finish=false;
     totalFitness=0;
     totalInverseFitness=0;
@@ -96,7 +96,7 @@ void GP::evaluation(){
     }
     std::string missionName;
     if(mission==Const::Mission::Sorting) missionName = "Sorting";
-    std::cout << "Evalutaion Done: Mission type " << missionName << "\n";
+    //std::cout << "Evalutaion Done: Mission type " << missionName << "\n";
 };
 
 int GP::weightedSelect(){
@@ -177,17 +177,12 @@ void GP::reproduce(int index1, int index2){
     }
 };
 
-void GP::selection(){
+void GP::crossover(){
     int program1 = weightedSelect();
     int program2 = weightedSelect();
     //std::cout << "Program 1 index: " << program1 << std::endl;
     //std::cout << "Program 2 index: " << program2 << std::endl;
     reproduce(program1, program2);
-};
-
-void GP::initialize(){
-    generatePopulation();
-
 };
 
 void GP::run(){
@@ -197,22 +192,92 @@ void GP::run(){
             break;
         }
         evaluation();
-        std::cout << "Generation: " << i << "\n";
-        std::cout << "Largest Fitness = " << largestFitness <<"\n";
-
+        
         if(finish){      
             std::cout << "Terminate Early! This is the final Program:\n";
-            finalProgram->showTree();
-            std::cout << "Fitness: " << largestFitness << "\n";
             break;
         }
+
         for(int i=0; i<20; i++) 
-            selection();
-        deleteRandom();
+            crossover();
         
-        std::cout << population.size() << " program remained" <<"\n";
+        //std::cout << population.size() << " program remained" <<"\n";
     }
+    //std::cout << "This is the final Program:\n";
+    //finalProgram->showTree();
+    //std::cout << "Fitness: " << largestFitness << "\n";
+};
+
+void GP::evolve(){
+    bool isGenerated = false;
+    //input train data from train_data.txt
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path filePath = currentPath.parent_path() / "src" / "train_data.txt";
+    
+    std::ifstream inputFile(filePath);
+    
+    if(!inputFile.is_open()) std::cout << "Cannot open file\n";
+
+    std::string line;
+    while(std::getline(inputFile, line)){
+        std::istringstream iss(line);
+
+        if (line=="\n" || line=="\t" || line.empty()) break;
+
+        fitness.resize(0);
+        if(Const::dimensionOfBuffer==1){
+            if(Const::typeOfBuffer==Int){  
+                int num; 
+                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                    iss >> num;
+                    data->set(i, num);
+                } 
+            }     
+            else if(Const::typeOfBuffer==Float){  
+                float num; 
+                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                    iss >> num;
+                    data->set(i, num);
+                } 
+            }  
+        }
+        else if(Const::dimensionOfBuffer==2){
+            if(Const::typeOfBuffer==Int){  
+                int num; 
+                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                    for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+                        iss >> num;
+                        data->set(i, j, num);
+                    }
+                } 
+            }     
+            else if(Const::typeOfBuffer==Float){  
+                float num; 
+                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                    for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+                        iss >> num;
+                        data->set(i, j, num);
+                    }
+                } 
+            }  
+        }
+
+        for(Program* program: population) {
+            program->changeData(*data);
+        }
+
+        if(!isGenerated){
+            isGenerated=true;
+            generatePopulation();
+        }
+
+        run();
+    }
+
+    std::cout << "Evolution done" << std::endl;
     std::cout << "This is the final Program:\n";
     finalProgram->showTree();
     std::cout << "Fitness: " << largestFitness << "\n";
+
+    inputFile.close();
 };

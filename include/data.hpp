@@ -26,10 +26,10 @@ public:
 namespace Const{
     static const int dimensionOfBuffer = 2;
     static const DataType typeOfBuffer = Int;
-    static const Shape shapeOfBuffer = Shape(3, 3);
+    static const Shape shapeOfBuffer = Shape(5, 5);
     
-    static const int maximumTreeHeight = 3;
-    static constexpr int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
+    static const int maximumTreeHeight = 5;
+    static int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
     
     enum growMethod{
         grow,
@@ -99,7 +99,6 @@ friend class Function;
 public:
     Data();
     Data(const Data &);
-    ~Data();
 
     int getIndexUseNumber();
     std::vector<int> indexUse;
@@ -107,6 +106,10 @@ public:
     void show();
     void set(std::vector<int> &, int);
     void set(std::vector<int> &, float);
+    void set(int, int);
+    void set(int, float);
+    void set(int, int, int);
+    void set(int, int, float);
     void setAvailable(int);
     void setAvailable(int, int);
 
@@ -119,7 +122,7 @@ public:
     float &getFloatValue(int, int);
 
 private:
-    bufferBase* bufferPtr;
+    std::unique_ptr<bufferBase> bufferPtr;
     int indexUseNumber;
 
     std::vector<bool> isIndexInit1D;

@@ -3,9 +3,14 @@
 #include "function.hpp"
 #include "program.hpp"
 #include "fitness.hpp"
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <random>
 #include <string>
+#include <filesystem>
+#include <sstream>
+
 
 class GP{
     int totalFitness;
@@ -13,15 +18,13 @@ class GP{
     int largestFitness;
     Program* finalProgram;
     bool finish;
-    static Data *data;
+    static std::unique_ptr<Data> data;
     static const int populationTotal;
     static const int maximumGeneration;
     std::vector<Program*> population;
     std::vector<int> fitnessAccumulation;
     std::vector<float> fitnessInverseAccumulation;
     std::vector<int> fitness;
-    
-
 public:
     GP();
     ~GP();
@@ -36,12 +39,12 @@ public:
     void evaluation();
     int weightedSelect();
     void reproduce(int, int);
-    void selection();
+    void crossover();
     void swap(int, int, int, int, int, int);
     void show();
     void showData();
     void deleteRandom();
-    void initialize();
     void run();
+    void evolve();
 
 };

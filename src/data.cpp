@@ -115,12 +115,12 @@ Data::Data():
     indexUseNumber(0)
 {
     if(Const::dimensionOfBuffer==1){
-        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt1D;
-        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat1D;
+        if(Const::typeOfBuffer==Int) bufferPtr = std::make_unique<bufferInt1D>();
+        else if(Const::typeOfBuffer==Float) bufferPtr = std::make_unique<bufferFloat1D>();;
     }
     else if(Const::dimensionOfBuffer==2)  {
-        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt2D;
-        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat2D;
+        if(Const::typeOfBuffer==Int) bufferPtr = std::make_unique<bufferInt2D>();
+        else if(Const::typeOfBuffer==Float) bufferPtr = std::make_unique<bufferFloat2D>();;
     }
 };
 
@@ -129,25 +129,21 @@ isIndexInit1D(givenData.isIndexInit1D), isIndexInit2D(givenData.isIndexInit2D), 
 {
     std::vector<int> index;
     if(Const::dimensionOfBuffer==1){  
-        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt1D;
-        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat1D;
+        if(Const::typeOfBuffer==Int) bufferPtr = std::make_unique<bufferInt1D>();
+        else if(Const::typeOfBuffer==Float) bufferPtr = std::make_unique<bufferFloat1D>();
         for(int i=0; i<indexUseNumber; i++){
             index.assign(indexUse.begin()+i, indexUse.begin()+i+1);
             bufferPtr->returnIntValue(index) = givenData.bufferPtr->returnIntValue(index);
         }
     }
     else if(Const::dimensionOfBuffer==2) {   
-        if(Const::typeOfBuffer==Int) bufferPtr = new bufferInt2D;
-        else if(Const::typeOfBuffer==Float) bufferPtr = new bufferFloat2D;
+        if(Const::typeOfBuffer==Int) bufferPtr = std::make_unique<bufferInt2D>();
+        else if(Const::typeOfBuffer==Float) bufferPtr = std::make_unique<bufferFloat2D>();
         for(int i=0; i<indexUseNumber; i++){
             index.assign(indexUse.begin()+2*i, indexUse.begin()+2*i+2);
             bufferPtr->returnIntValue(index) = givenData.bufferPtr->returnIntValue(index);
         }
     }
-};
-
-Data::~Data(){
-    delete bufferPtr;
 };
 
 int Data::getIndexUseNumber(){
@@ -210,6 +206,32 @@ void Data::set(std::vector<int> &index, float f){
     bufferPtr->returnFloatValue(index) = f;
     if(Const::dimensionOfBuffer==1) setAvailable(index[0]);
     else if(Const::dimensionOfBuffer==2) setAvailable(index[0], index[1]);
+};
+
+void Data::set(int index, int i){
+    std::vector<int> v;
+    v.push_back(index);
+    set(v, i);
+};
+
+void Data::set(int index, float f){
+    std::vector<int> v;
+    v.push_back(index);
+    set(v, f);
+};
+
+void Data::set(int index_x, int index_y, int i){
+    std::vector<int> v;
+    v.push_back(index_x);
+    v.push_back(index_y);
+    set(v, i);
+};
+
+void Data::set(int index_x, int index_y, float f){
+    std::vector<int> v;
+    v.push_back(index_x);
+    v.push_back(index_y);
+    set(v, f);
 };
 
 void Data::setAvailable(int i){

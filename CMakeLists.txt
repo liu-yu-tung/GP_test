@@ -6,7 +6,8 @@ add_executable(gp main.cpp)
 
 include_directories(include)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*")
+
 
 target_sources(gp PRIVATE ${SOURCES})
  

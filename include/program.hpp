@@ -23,6 +23,7 @@ public:
     ~Program();
     void execution();
     void showTree();
+    void changeData(Data &);
     Data* dataPtr;
 };
 

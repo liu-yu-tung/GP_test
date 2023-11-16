@@ -30,6 +30,7 @@ public:
     ~GP();
     std::vector<int> prefixReference;
     static const Const::Mission mission;
+
     void setData(int, int);
     void setData(int, int, int);
     void setData(int, float);

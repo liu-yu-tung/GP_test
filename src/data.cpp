@@ -115,6 +115,7 @@ Data::Data():
     indexUseNumber(0)
 {
     if(Const::dimensionOfBuffer==1){
+        std::cout << "here\n";
         if(Const::typeOfBuffer==Int) bufferPtr = std::make_unique<bufferInt1D>();
         else if(Const::typeOfBuffer==Float) bufferPtr = std::make_unique<bufferFloat1D>();;
     }

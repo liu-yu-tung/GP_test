@@ -50,6 +50,8 @@ namespace Const{
         Sorting,
         NUM_ENTRIES_MISSION
     };
+
+    static const int trainDataNumber = 100;
 };
 
 //get basic data info

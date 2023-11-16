@@ -210,6 +210,11 @@ void GP::run(){
 
 void GP::evolve(){
     bool isGenerated = false;
+
+    //counter for showing program progress 
+    int loopCounter = 0;
+    int counter = 0;
+ 
     //input train data from train_data.txt
     std::filesystem::path currentPath = std::filesystem::current_path();
     std::filesystem::path filePath = currentPath.parent_path() / "src" / "train_data.txt";
@@ -271,7 +276,15 @@ void GP::evolve(){
             generatePopulation();
         }
 
+        
         run();
+
+        if(counter==0) std::cout << "EVOLUTION COMPLETENESS: " << loopCounter*10 << "%\n";
+        counter++;
+        if(counter==int(Const::trainDataNumber*0.1)){
+            counter = 0;
+            loopCounter++;
+        }
     }
 
     std::cout << "Evolution done" << std::endl;

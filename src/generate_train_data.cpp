@@ -4,12 +4,12 @@
 void sorting();
 
 Const::Mission mission = Const::Sorting;
-int totalNumber = 100; 
-int dimension = 2;
-Shape shape = Shape(5, 5);
-DataType type = DataType::Int;
+int totalNumber = Const::trainDataNumber; 
+int dimension = Const::dimensionOfBuffer;
+Shape shape = Const::shapeOfBuffer;
+DataType type = Const::typeOfBuffer;
+
 std::ofstream outputFile;
-std::ofstream ans;
 
 void generate_train_data(){
     std::string filename = "../src/train_data.txt";

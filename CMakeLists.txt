@@ -2,14 +2,18 @@ cmake_minimum_required(VERSION 3.10)
 set (CMAKE_CXX_STANDARD 17)
 project(gp)
 
-add_executable(gp main.cpp)
+# include_directories(include)
+file(GLOB GP_SRC "src/*.cpp")
 
-include_directories(include)
+add_executable(gp main.cpp
+    ${GP_SRC}
+)
 
-file(GLOB SOURCES "src/*")
+target_include_directories(gp PRIVATE
+    include
+)
 
-
-target_sources(gp PRIVATE ${SOURCES})
+# target_sources(gp PRIVATE ${SOURCES})
  
 
 

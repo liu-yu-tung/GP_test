@@ -1,5 +1,5 @@
 #pragma once
-#include "../include/data.hpp"
+#include "data.hpp"
 #include <fstream>
 #include <string>
 #include <random>

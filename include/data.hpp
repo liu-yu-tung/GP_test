@@ -12,6 +12,7 @@ enum DataType{
 };
 
 class Shape{
+
     int lengthOfBuffer;
     int widthOfBuffer;
 public:
@@ -23,6 +24,9 @@ public:
 };
 
 //defined constants
+/**
+ * \brief  define namespace Const.
+*/
 namespace Const{
     static const int dimensionOfBuffer = 2;
     static const DataType typeOfBuffer = Int;
@@ -55,6 +59,10 @@ namespace Const{
 };
 
 //get basic data info
+/**
+ * \brief Get basic data info.
+ * 
+*/
 void GETINFO();
 
 class bufferBase{

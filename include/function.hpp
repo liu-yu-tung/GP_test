@@ -26,17 +26,28 @@ protected:
 
     virtual int getArity() = 0;
     virtual int getOutputNumber() = 0;
-    //for 1-D data, store index once a time. e.g, argumentIndex[0] = index
-    //for 2-D data, store index twice a time. argumentIndex[0] & argumentIndex[1] = index
+    /**
+     * For 1-D data, store index once a time. e.g, argumentIndex[0] = index.
+     * For 2-D data, store index twice a time. argumentIndex[0] & argume.ntIndex[1] = index.
+     * 
+    */
     std::vector<int> argumentIndex;
     std::vector<int> outputIndex;
     std::vector<Function *> children;
 public:
-    //to set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2)
+    /**
+     * \brief Setting and checking args.
+     * 
+     * To set the index of argument of function. e.g. Data[index1'][index2'] = max(index1, index2).
+     * 
+    */
     void setArgument(std::vector<int> &, std::vector<int> &);
 
 };
 
+/**
+ * \brief Define Max2 Fucntion class.
+*/
 class Max2: public Function{
 public:
     Max2(Data *);
@@ -53,6 +64,9 @@ protected:
     
 };
 
+/**
+ * \brief Define Swap Fucntion class.
+*/
 class Swap: public Function{
 public:
     Swap(Data *);

@@ -1,4 +1,4 @@
-#include "../include/gp.hpp"
+#include "gp.hpp"
 const Const::Mission GP::mission = Const::Mission::Sorting;
 const int GP::populationTotal = 10;
 const int GP::maximumGeneration = 10;

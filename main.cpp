@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "include/data.hpp"
-#include "include/function.hpp"
-#include "include/program.hpp"
-#include "include/fitness.hpp"
-#include "include/gp.hpp"
-#include "include/generate_train_data.hpp"
+#include "data.hpp"
+#include "function.hpp"
+#include "program.hpp"
+#include "fitness.hpp"
+#include "gp.hpp"
+#include "generate_train_data.hpp"
 
 int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );

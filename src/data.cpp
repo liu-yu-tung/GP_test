@@ -1,4 +1,4 @@
-#include "../include/data.hpp"
+#include "data.hpp"
 Shape::Shape(int _lengthOfBuffer):lengthOfBuffer(_lengthOfBuffer){};
 
 Shape::Shape(int _lengthOfBuffer, int _widthOfBuffer):

@@ -1,4 +1,4 @@
-#include "../include/generate_train_data.hpp"
+#include "generate_train_data.hpp"
 
 
 void sorting();

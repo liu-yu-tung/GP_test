@@ -1,4 +1,4 @@
-#include "../include/function.hpp"
+#include "function.hpp"
 
 const int Function::arity = -1;
 const int Function::outputNumber = -1;

@@ -1,4 +1,4 @@
-#include "../include/program.hpp"
+#include "program.hpp"
 
 Program::Program(Const::growMethod method, Data &data){
     dataPtr = new Data(data);

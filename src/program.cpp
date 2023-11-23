@@ -10,12 +10,34 @@ Program::~Program(){
     for(Function *f:tree) delete f;
 };
 
-Function *Program::randomChooseFunction(int height){
-    std::random_device rd; 
-    std::mt19937 gen(rd()); 
-    std::uniform_int_distribution<int> distribution(1, Const::functionSetNumber);
-    int functionNumber = distribution(gen);
-    return createFunction(functionNumber, height);
+std::unique_ptr<Function> Program::randomChooseFunction(int height){
+    srand(Const::randomSeed);
+    int functionNumber = (int)(rand()/Const::functionSetNumber);
+    std::unique_ptr<Function> f;
+
+    switch (functionNumber)
+    {
+    case Const::functionSet::Recursive:
+        f = std::make_unique<Function>(Recursive());
+        break;
+    case Const::functionSet::If_else:
+        f = std::make_unique<Function>(If_else());
+        break;
+    case Const::functionSet::Swap:
+        f = std::make_unique<Function>(Swap());  
+        break;
+    case Const::functionSet::Head:
+        f = std::make_unique<Function>(Head());
+        break;
+    case Const::functionSet::Nxt:
+        f = std::make_unique<Function>(Nxt());   
+        break;
+    default:
+        break;
+    }
+
+    f->setHeight(height);
+    return std::make_unique(f);
 };
 
 void Program::growTree(Const::growMethod method){
@@ -29,7 +51,7 @@ void Program::growTree(Const::growMethod method){
 };
 
 void Program::grow(Function *f, int height){
-    
+
     /*
     if(height==Const::maximumTreeHeight){
         f->addChild(NULL);
@@ -45,20 +67,6 @@ void Program::grow(Function *f, int height){
         grow(right, height);
         tree.push_back(f);
     }*/
-};
-
-//to make program get specific function
-Function *Program::createFunction(int functionNumber, int height){
-    Function* f;
-    functionNumber--;
-    if(functionNumber==Const::functionSet::Max2){
-        f = new Max2(dataPtr);
-    }
-    else if(functionNumber==Const::functionSet::Swap){
-        f = new Swap(dataPtr);
-    }
-    f->setHeight(height);
-    return f;
 };
 
 void Program::fillArgument(){

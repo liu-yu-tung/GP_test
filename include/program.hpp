@@ -1,23 +1,14 @@
 #pragma once
-#include "data.hpp"
 #include "function.hpp"
+#include "data.hpp"
 #include <vector>
+#include <memory>
 #include <list>
-#include <random>
+#include <stdlib.h>
 
 class Program{
-friend class GP;
     Function *rootOfTree;
-    std::vector<Function*> tree;
-
-    /**
-     * \brief To make program get specific function.
-     * \param functionNumber Function enum in function set.
-     * \param height Set height of the Program.
-     * 
-     * \return Function pointer.
-    */
-    Function* createFunction(int, int);
+    std::vector<std::unique_ptr<Function>> tree;
 
     /**
      * \brief Choosing a Function for the Function* tree node.
@@ -25,7 +16,7 @@ friend class GP;
      * 
      * \return The Choosed Function.
     */
-    Function *randomChooseFunction(int);
+    std::unique_ptr<Function> randomChooseFunction(int);
 
     /**
      * \brief Called in growTree().

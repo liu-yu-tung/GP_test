@@ -5,13 +5,15 @@ const int Function::arity = -1;
 // Swap
 const int Swap::arity = 2;
 const std::string Swap::functionName = "Swap";
-const std::vector<DataType> Swap::inType = {DataType::Int, DataType::Int};
-const DataType Swap::outType = DataType::None;
+const std::vector<Const::DataType> Swap::inType = {Const::DataType::Int, Const::DataType::Int};
+const Const::DataType Swap::outType = Const::DataType::None;
 
 
 // Loop
 const int Loop::arity = 0;
 const std::string Loop::functionName = "Loop";
+const std::vector<Const::DataType> Loop::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
+const Const::DataType Loop::outType = Const::DataType::None;
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
 

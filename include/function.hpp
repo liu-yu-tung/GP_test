@@ -28,23 +28,23 @@ public:
     int height;
 
     static const int arity;
-    static const std::vector<DataType> inType;
-    static const DataType outType;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
 };
 
 
 class Swap: public Function{
 public:
     Swap(Data *);
-    static const std::string functionName;
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
 
 protected:
     static const int arity;
-    static const std::vector<DataType> inType;
-    static const DataType outType;
 };
 
 /**
@@ -61,12 +61,12 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
-    //int getOutputNumber() override;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
 protected:
     std::unique_ptr<Function> f;
     std::unique_ptr<Function> g;
     static const int arity;
-    //static const int outputNumber;
 };
 
 

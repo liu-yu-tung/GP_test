@@ -6,12 +6,6 @@
 #include <stdio.h>
 #include <cmath>
 
-enum DataType{
-    Int,
-    Bool, 
-    Function, 
-    None
-};
 
 
 //defined constants
@@ -19,6 +13,14 @@ enum DataType{
  * \brief  define namespace Const.
 */
 namespace Const{
+
+    enum DataType{
+        Int,
+        Bool, 
+        Function, 
+        None
+    };
+    
     static const int dataLength = 10;
     static const int maximumTreeHeight = 5;
     static int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
@@ -32,11 +34,14 @@ namespace Const{
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{
-        Max2,
-        Swap,
-        Loop,
+        Recursive, 
+        If_else, 
+        Swap, 
+        Head, 
+        Nxt,
         NUM_ENTRIES
     };
+
     static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES-1);
 
     enum Mission{

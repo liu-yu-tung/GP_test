@@ -3,17 +3,19 @@
 const int Function::arity = -1;
 const int Function::outputNumber = -1;
 
+/*
 const int Max2::arity = 2;
 const int Max2::outputNumber = 1;
 const std::string Max2::functionName = "Max2";
+*/
 const int Swap::arity = 2;
 const int Swap::outputNumber = 0;
 const std::string Swap::functionName = "Swap";
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
 
+/*
 void Function::setArgument(std::vector<int> &arguments, std::vector<int> &outputs){
-    //check if argument number matches
     if(arguments.size()!=getArity()*Const::dimensionOfBuffer){
         std::cerr << getFunctionName() << " should get " << getArity()*Const::dimensionOfBuffer<< " arguments\n";
         return;
@@ -26,6 +28,7 @@ void Function::setArgument(std::vector<int> &arguments, std::vector<int> &output
     argumentIndex = arguments;
     outputIndex = outputs;
 };
+*/
 
 void Function::addChild(Function *child){
     children.push_back(child);
@@ -36,12 +39,14 @@ void Function::show(){
     std::cout << "Function Name: " << getFunctionName() << std::endl;
     std::cout << "Height: " << height << std::endl;
     std::cout << "Arugument index = ";
+    /*
     for(int index: argumentIndex)
         std::cout << index << " ";
     std::cout << std::endl;
     std::cout << "Outputs index = ";
     for(int index: outputIndex)
         std::cout << index << " ";
+    */
     std::cout << std::endl;
     std::cout << "::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
 };
@@ -50,6 +55,7 @@ void Function::setHeight(int h){
     height = h;
 };
 
+/*
 int &Function::getInt(std::vector<int> &index, int order){
     return dataPtr->getIntValue(index, order);
 };
@@ -85,6 +91,7 @@ void Max2::execution(){
     }
     dataPtr->set(outputIndex, a>b? a:b);
 };
+*/
 
 Swap::Swap(Data *dataptr): Function(dataptr){};
 

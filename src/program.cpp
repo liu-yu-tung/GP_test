@@ -29,6 +29,8 @@ void Program::growTree(Const::growMethod method){
 };
 
 void Program::grow(Function *f, int height){
+    
+    /*
     if(height==Const::maximumTreeHeight){
         f->addChild(NULL);
         tree.push_back(f);
@@ -42,7 +44,7 @@ void Program::grow(Function *f, int height){
         grow(left, height);
         grow(right, height);
         tree.push_back(f);
-    }
+    }*/
 };
 
 //to make program get specific function

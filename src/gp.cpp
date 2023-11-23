@@ -1,7 +1,7 @@
 #include "gp.hpp"
 const Const::Mission GP::mission = Const::Mission::Sorting;
-const int GP::populationTotal = 10;
-const int GP::maximumGeneration = 10;
+const int GP::totalPopulation = 100;
+const int GP::maximumGeneration = 30;
 
 std::unique_ptr<Data> GP::data;
 
@@ -9,6 +9,7 @@ GP::GP(){
     largestFitness = 0;
     data = std::make_unique<Data>();
     prefixReference.resize(Const::fullTreeNodeNumber);
+    infixReference.resize(Const::fullTreeNodeNumber);
     int count = 0;
     generatePrefix(0, count);
 };
@@ -57,7 +58,7 @@ void GP::setData(int x, int y, float f){
 
 void GP::generatePopulation(){
     if(Const::growMethodGlobal!=Const::growMethod::half_half){
-        for(int i=0; i<populationTotal; i++){
+        for(int i=0; i<totalPopulation; i++){
             Program* programPtr = new Program(Const::growMethodGlobal, *data);
             population.push_back(programPtr);
         }
@@ -109,7 +110,7 @@ int GP::weightedSelect(){
     std::uniform_int_distribution<int> distribution(0, totalFitness);
     int randomNumber = distribution(gen);
 
-    for (int i=0; i<populationTotal; i++){
+    for (int i=0; i<totalPopulation; i++){
         if (randomNumber <= fitnessAccumulation[i])
             return i;
     }
@@ -136,7 +137,7 @@ void GP::deleteRandom(){
     float randomNumber = distribution(gen);
 
     int index;
-    for (int i=0; i<populationTotal; i++){
+    for (int i=0; i<totalPopulation; i++){
         if (randomNumber < fitnessInverseAccumulation[i]){
             index = i;
             break;
@@ -158,6 +159,7 @@ void GP::generatePrefix(int num, int &count){
         generatePrefix((num+1)*2, count);
     }
     prefixReference[num] = count;
+    infixReference[count] = num;
     count++;
 };
 
@@ -210,7 +212,7 @@ void GP::run(){
 
 void GP::evolve(){
     bool isGenerated = false;
-
+    fitnessAverage.resize(totalPopulation, 0);
     //counter for showing program progress 
     int loopCounter = 0;
     int counter = 0;
@@ -224,73 +226,93 @@ void GP::evolve(){
     if(!inputFile.is_open()) std::cout << "Cannot open file\n";
 
     std::string line;
-    while(std::getline(inputFile, line)){
-        std::istringstream iss(line);
 
-        if (line=="\n" || line=="\t" || line.empty()) break;
+    for(int i=0; i<maximumGeneration; i++){
+        while(std::getline(inputFile, line)){
+            std::istringstream iss(line);
+            if (line=="\n" || line=="\t" || line.empty()) break;
 
-        fitness.resize(0);
-        if(Const::dimensionOfBuffer==1){
-            if(Const::typeOfBuffer==Int){  
-                int num; 
-                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
-                    iss >> num;
-                    data->set(i, num);
-                } 
-            }     
-            else if(Const::typeOfBuffer==Float){  
-                float num; 
-                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
-                    iss >> num;
-                    data->set(i, num);
-                } 
-            }  
-        }
-        else if(Const::dimensionOfBuffer==2){
-            if(Const::typeOfBuffer==Int){  
-                int num; 
-                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
-                    for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+            largestFitness = 0;
+            fitness.resize(0);
+            if(Const::dimensionOfBuffer==1){
+                if(Const::typeOfBuffer==Int){  
+                    int num; 
+                    for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
                         iss >> num;
-                        data->set(i, j, num);
-                    }
-                } 
-            }     
-            else if(Const::typeOfBuffer==Float){  
-                float num; 
-                for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
-                    for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+                        data->set(i, num);
+                    } 
+                }     
+                else if(Const::typeOfBuffer==Float){  
+                    float num; 
+                    for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
                         iss >> num;
-                        data->set(i, j, num);
-                    }
-                } 
-            }  
-        }
+                        data->set(i, num);
+                    } 
+                }  
+            }
+            else if(Const::dimensionOfBuffer==2){
+                if(Const::typeOfBuffer==Int){  
+                    int num; 
+                    for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                        for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+                            iss >> num;
+                            data->set(i, j, num);
+                        }
+                    } 
+                }     
+                else if(Const::typeOfBuffer==Float){  
+                    float num; 
+                    for(int i=0; i<Const::shapeOfBuffer.getLength(); i++){
+                        for(int j=0; j<Const::shapeOfBuffer.getWidth(); j++){
+                            iss >> num;
+                            data->set(i, j, num);
+                        }
+                    } 
+                }  
+            }
 
-        for(Program* program: population) {
-            program->changeData(*data);
-        }
+            for(Program* program: population) {
+                program->changeData(*data);
+            }
 
-        if(!isGenerated){
-            isGenerated=true;
-            generatePopulation();
-        }
+            if(!isGenerated){
+                isGenerated=true;
+                generatePopulation();
+            }
 
+            evaluation();
+            for (size_t i=0; i<fitness.size(); i++) fitnessAverage[i] += fitness[i];       
+        }
         
-        run();
+        for(float fit: fitnessAverage) fit/=totalPopulation;
+        crossover();
 
         if(counter==0) std::cout << "EVOLUTION COMPLETENESS: " << loopCounter*10 << "%\n";
         counter++;
-        if(counter==int(Const::trainDataNumber*0.1)){
+        if(counter==int(maximumGeneration*0.1)){
             counter = 0;
             loopCounter++;
+            if(loopCounter==10) std::cout << "EVOLUTION COMPLETENESS: 100%\n";
         }
     }
+    //show the result to out.txt
+    std::ofstream outFile("../src/out.txt");
 
-    std::cout << "Evolution done" << std::endl;
-    std::cout << "This is the final Program:\n";
-    finalProgram->showTree();
-    std::cout << "Fitness: " << largestFitness << "\n";
+    outFile << "Evolution done" << std::endl;
+    outFile << "This is the final Program:\n";
+    int infix = 0;
+    for(int index: prefixReference){
+        outFile << "Infix index: " << infix << ", Function name: " <<
+            finalProgram->tree[index]->getFunctionName() << ", Argument: ";
+        for(int i=0; i<finalProgram->tree[index]->getArity(); i++)
+            outFile << finalProgram->tree[index]->argumentIndex[i] << " "; 
+        outFile << ", Output index: ";
+        for(int i=0; i<finalProgram->tree[index]->getOutputNumber(); i++)
+            outFile << finalProgram->tree[index]->outputIndex[i] << " "; 
+        outFile << "\n";
+        infix++;
+    }
+    outFile << "Fitness: " << largestFitness << "\n";
 
     inputFile.close();
 };

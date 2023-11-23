@@ -18,10 +18,12 @@ class GP{
     int largestFitness;
     Program* finalProgram;
     bool finish;
+    
     static std::unique_ptr<Data> data;
-    static const int populationTotal;
+    static const int totalPopulation;
     static const int maximumGeneration;
     std::vector<Program*> population;
+    std::vector<float> fitnessAverage;
     std::vector<int> fitnessAccumulation;
     std::vector<float> fitnessInverseAccumulation;
     std::vector<int> fitness;
@@ -29,6 +31,7 @@ public:
     GP();
     ~GP();
     std::vector<int> prefixReference;
+    std::vector<int> infixReference;
     static const Const::Mission mission;
 
     void setData(int, int);

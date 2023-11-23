@@ -26,18 +26,6 @@
 int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );
     generate_train_data();
-    /*
-    GP gp;
-    gp.setData(1, 1, 5);
-    gp.setData(1, 2, 2);
-    gp.setData(2, 0, 3);
-    gp.setData(2, 1, 4);
-    gp.setData(2, 2, 1);
-    gp.showData();
-    gp.initialize();
-    //gp.show();
-    gp.run();
-    */
     GP gp;
     gp.evolve();
 /*

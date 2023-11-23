@@ -18,14 +18,9 @@ public:
     virtual std::string getFunctionName() = 0;
     virtual void execution() = 0;
 
-protected:
-    Data *dataPtr;
-    static const int arity;
-    static const int outputNumber;
-    int height;
-
     virtual int getArity() = 0;
     virtual int getOutputNumber() = 0;
+
     /**
      * For 1-D data, store index once a time. e.g, argumentIndex[0] = index.
      * For 2-D data, store index twice a time. argumentIndex[0] & argume.ntIndex[1] = index.
@@ -33,6 +28,12 @@ protected:
     */
     std::vector<int> argumentIndex;
     std::vector<int> outputIndex;
+
+protected:
+    Data *dataPtr;
+    static const int arity;
+    static const int outputNumber;
+    int height;
     std::vector<Function *> children;
 public:
     /**
@@ -45,6 +46,20 @@ public:
 
 };
 
+class Leaf: public Function{
+public:
+    Leaf(Data *);
+    static const std::string functionName;
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    int getOutputNumber() override; 
+protected:
+    static const int arity;
+    static const int outputNumber;
+
+};
+
 /**
  * \brief Define Max2 Fucntion class.
 */
@@ -54,14 +69,12 @@ public:
     static const std::string functionName;
     std::string getFunctionName() override;
     void execution() override;
-
+    int getArity() override;
+    int getOutputNumber() override; 
 protected:
-    
     static const int arity;
     static const int outputNumber;
-    int getArity() override;
-    int getOutputNumber() override;
-    
+
 };
 
 /**
@@ -73,13 +86,35 @@ public:
     static const std::string functionName;
     std::string getFunctionName() override;
     void execution() override;
-
+    int getArity() override;
+    int getOutputNumber() override;
 protected:
 
     static const int arity;
     static const int outputNumber;
+};
+
+/**
+ * \brief Define Loop Fucntion class
+ * Loop(f, data)
+ *      if(data.size==1) return g(data)
+ *      else if return(f, data.cdr)
+ * .
+*/
+class Loop: public Function{
+public:
+    Loop(Data *);
+    static const std::string functionName;
+    std::string getFunctionName() override;
+    void execution() override;
     int getArity() override;
     int getOutputNumber() override;
+protected:
+    std::unique_ptr<Function> f;
+    std::unique_ptr<Function> g;
+    static const int arity;
+    static const int outputNumber;
+
 };
 
 

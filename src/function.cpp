@@ -3,12 +3,19 @@
 const int Function::arity = -1;
 const int Function::outputNumber = -1;
 
+const int Leaf::arity = 0;
+const int Leaf::outputNumber = 0;
+const std::string Leaf::functionName = "Leaf";
+
 const int Max2::arity = 2;
 const int Max2::outputNumber = 1;
 const std::string Max2::functionName = "Max2";
 const int Swap::arity = 2;
 const int Swap::outputNumber = 0;
 const std::string Swap::functionName = "Swap";
+const int Loop::arity = 0;
+const int Loop::outputNumber = 0;
+const std::string Loop::functionName = "Loop";
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
 
@@ -56,6 +63,23 @@ int &Function::getInt(std::vector<int> &index, int order){
 
 float &Function::getFloat(std::vector<int> &index, int order){
     return dataPtr->getFloatValue(index, order);
+};
+
+Leaf::Leaf(Data *dataptr): Function(dataptr){};
+
+std::string Leaf::getFunctionName(){
+    return Leaf::functionName;
+}
+
+int Leaf::getArity(){
+    return Leaf::arity;
+};
+
+int Leaf::getOutputNumber(){
+    return Leaf::outputNumber;
+};
+
+void Leaf::execution(){
 };
 
 Max2::Max2(Data *dataptr): Function(dataptr){};
@@ -113,4 +137,34 @@ int Swap::getArity(){
     
 int Swap::getOutputNumber(){
     return Swap::outputNumber;
+};
+
+
+Loop::Loop(Data *dataptr): Function(dataptr){};
+
+std::string Loop::getFunctionName(){
+    return Loop::functionName;
+}
+
+void Loop::execution(){
+    int temp; 
+    if(Const::typeOfBuffer==Int){
+        temp = dataPtr->getIntValue(argumentIndex, 1);
+        dataPtr->getIntValue(argumentIndex, 1) = dataPtr->getIntValue(argumentIndex, 2);
+        dataPtr->getIntValue(argumentIndex, 2) = temp;
+    }   
+    else if(Const::typeOfBuffer==Float){
+        temp = dataPtr->getFloatValue(argumentIndex, 1);
+        dataPtr->getFloatValue(argumentIndex, 1) = dataPtr->getFloatValue(argumentIndex, 2);
+        dataPtr->getFloatValue(argumentIndex, 2) = temp;
+    }
+};
+
+
+int Loop::getArity(){
+    return Loop::arity;
+};
+    
+int Loop::getOutputNumber(){
+    return Loop::outputNumber;
 };

@@ -34,7 +34,7 @@ namespace Const{
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{
-        Recursive, 
+        Loop, 
         If_else, 
         Swap, 
         Head, 
@@ -56,6 +56,7 @@ namespace Const{
 class Data{
 public:
     Data();
+    Data(Data&);
     int get(int);
     void set(int, int);
     void show();

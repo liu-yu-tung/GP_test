@@ -7,13 +7,13 @@
 #include <stdlib.h>
 
 class Program{
-    Function *rootOfTree;
-    std::vector<std::unique_ptr<Function>> tree;
+    std::unique_ptr<Function> root;
+    std::vector<std::unique_ptr<Function>> tree; //store tree in prefix order
+    std::unique_ptr<Data> dataPtr;
 
     /**
      * \brief Choosing a Function for the Function* tree node.
      * \param int Random seed.
-     * 
      * \return The Choosed Function.
     */
     std::unique_ptr<Function> randomChooseFunction(int);
@@ -21,24 +21,16 @@ class Program{
     /**
      * \brief Called in growTree().
     */
-    void grow(Function *, int);
+    void grow(std::unique_ptr<Function> &, int);
 
     /**
      * \brief Base on different method grow the tree.
     */
     void growTree(Const::growMethod);
 
-    /**
-     * For differnet dimension, random choose index of each function by prefix and rechoose if not 
-    */
-    void fillArgument();
-
 public:
     Program(Const::growMethod, Data &);
-    ~Program();
     void execution();
-    void showTree();
     void changeData(Data &);
-    Data* dataPtr;
 };
 

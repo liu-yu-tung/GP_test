@@ -4,6 +4,10 @@ Data::Data(){
     data.resize(Const::dataLength);
 };
 
+Data::Data(Data& D){
+  this->data.assign(D.data.begin(), D.data.end());
+};
+
 int Data::get(int index){
     if(index<0 || index>=Const::dataLength) {
         std::cerr << "Data::get(int): Getting data out of index is not allowed.\n";

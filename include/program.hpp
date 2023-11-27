@@ -9,14 +9,14 @@
 class Program{
     std::unique_ptr<Function> root;
     std::vector<std::unique_ptr<Function>> tree; //store tree in prefix order
-    std::unique_ptr<Data> dataPtr;
+    std::shared_ptr<Data> dataPtr;
 
     /**
      * \brief Choosing a Function for the Function* tree node.
      * \param int Random seed.
      * \return The Choosed Function.
     */
-    std::unique_ptr<Function> randomChooseFunction(int);
+    std::unique_ptr<Function> randomChooseFunction(int, Const::DataType&);
 
     /**
      * \brief Called in growTree().

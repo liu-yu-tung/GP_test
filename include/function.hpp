@@ -8,9 +8,9 @@ class Data;
 class Function {
 friend class Program;
 public:
-    Function(Data* dataPtr_);
+    Function(std::shared_ptr<Data> dataPtr);
 
-    void addChild(Function *f);
+    void addChild(std::unique_ptr<Function> f);
     void show();
     void setHeight(int h);
     void setInRecursive(bool state);
@@ -20,8 +20,8 @@ public:
     virtual void execution() = 0;
     virtual int getArity() = 0;
 
-    Data *dataPtr;
-    std::vector<Function*> children;
+    std::shared_ptr<Data> dataPtr;
+    std::vector<std::unique_ptr<Function>> children;
 
     bool inRecursive;
     int listBegin;
@@ -37,7 +37,7 @@ public:
 
 class Recursive: public Function {
 public:
-    Recursive(Data *);
+    Recursive(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -58,7 +58,7 @@ protected:
 */
 class IfElse: public Function{
 public:
-    IfElse(Data *);
+    IfElse(std::shared_ptr<Data>);
     static const std::string functionName;
     std::string getFunctionName() override;
     void execution() override;
@@ -74,7 +74,7 @@ protected:
 
 class Swap: public Function{
 public:
-    Swap(Data *);
+    Swap(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -88,7 +88,7 @@ protected:
 
 class Nxt: public Function{
 public:
-    Nxt(Data *);
+    Nxt(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -102,7 +102,7 @@ protected:
 
 class Head: public Function{
 public:
-    Head(Data *);
+    Head(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -116,7 +116,7 @@ protected:
 
 class GetDataByIndex: public Function {
 public:
-    GetDataByIndex(Data *);
+    GetDataByIndex(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -130,7 +130,7 @@ protected:
 
 class Assign: public Function {
 public:
-    Assign(Data *);
+    Assign(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -144,7 +144,7 @@ protected:
 
 class BoolEqual: public Function {
 public:
-    BoolEqual(Data *);
+    BoolEqual(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;

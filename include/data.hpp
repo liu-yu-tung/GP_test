@@ -39,6 +39,10 @@ namespace Const{
         Swap, 
         Head, 
         Nxt,
+        Greater, 
+        Less, 
+        Equal, 
+        Not,
         NUM_ENTRIES
     };
 

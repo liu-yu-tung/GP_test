@@ -50,8 +50,8 @@ const std::string BoolEqual::functionName = "BoolEqual";
 const std::vector<Const::DataType> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
 const Const::DataType BoolEqual::outType = Const::DataType::Bool;
 
-Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
-void Function::addChild(Function *child){
+Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
+void Function::addChild(std::unique_ptr<Function> child){
     children.push_back(child);
 };
 
@@ -85,7 +85,7 @@ void Function::setListBegin(int begin) {
 };
 
 
-Swap::Swap(Data *dataptr): Function(dataptr){};
+Swap::Swap(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Swap::getFunctionName(){
     return Swap::functionName;
@@ -104,7 +104,7 @@ int Swap::getArity(){
 };
 
     
-IfElse::IfElse(Data *dataptr): Function(dataptr){};
+IfElse::IfElse(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string IfElse::getFunctionName(){
     return IfElse::functionName;
@@ -123,7 +123,7 @@ int IfElse::getArity(){
 };
     
 
-Recursive::Recursive(Data *dataptr): Function(dataptr){};
+Recursive::Recursive(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Recursive::getFunctionName(){
     return Recursive::functionName;
@@ -136,7 +136,7 @@ int Recursive::getArity(){
     return Recursive::arity;
 };
     
-Nxt::Nxt(Data *dataptr): Function(dataptr){};
+Nxt::Nxt(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Nxt::getFunctionName(){
     return Nxt::functionName;
@@ -151,7 +151,7 @@ int Nxt::getArity(){
 };
     
 
-Head::Head(Data *dataptr): Function(dataptr){};
+Head::Head(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Head::getFunctionName(){
     return Head::functionName;
@@ -165,7 +165,7 @@ int Head::getArity(){
     return Head::arity;
 };
     
-GetDataByIndex::GetDataByIndex(Data *dataptr): Function(dataptr){};
+GetDataByIndex::GetDataByIndex(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string GetDataByIndex::getFunctionName(){
     return GetDataByIndex::functionName;
@@ -178,7 +178,7 @@ int GetDataByIndex::getArity(){
     return GetDataByIndex::arity;
 };
     
-Assign::Assign(Data *dataptr): Function(dataptr){};
+Assign::Assign(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Assign::getFunctionName(){
     return Assign::functionName;
@@ -192,7 +192,7 @@ int Assign::getArity(){
     return Assign::arity;
 };
     
-BoolEqual::BoolEqual(Data *dataptr): Function(dataptr){};
+BoolEqual::BoolEqual(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string BoolEqual::getFunctionName(){
     return BoolEqual::functionName;

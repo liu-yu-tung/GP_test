@@ -16,12 +16,13 @@ class Program{
      * \param int Random seed.
      * \return The Choosed Function.
     */
+    std::unique_ptr<Function> randomChooseFunction(int);
     std::unique_ptr<Function> randomChooseFunction(int, Const::DataType&);
 
     /**
      * \brief Called in growTree().
     */
-    void grow(std::unique_ptr<Function> &, int);
+    void grow(std::unique_ptr<Function> &, int, bool);
 
     /**
      * \brief Base on different method grow the tree.
@@ -32,5 +33,6 @@ public:
     Program(Const::growMethod, Data &);
     void execution();
     void changeData(Data &);
+    void show();
 };
 

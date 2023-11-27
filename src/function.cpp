@@ -26,10 +26,25 @@ const std::string Nxt::functionName = "Nxt";
 const std::vector<Const::DataType> Nxt::inType = {Const::DataType::None};
 const Const::DataType Nxt::outType = Const::DataType::Int;
 
+// Head
+const int Head::arity = 0;
+const std::string Head::functionName = "Head";
+const std::vector<Const::DataType> Head::inType = {Const::DataType::None};
+const Const::DataType Head::outType = Const::DataType::Int;
+
+// GetDataByIndex
+const int GetDataByIndex::arity = 1;
+const std::string GetDataByIndex::functionName = "GetDataByIndex";
+const std::vector<Const::DataType> GetDataByIndex::inType = {Const::DataType::Int};
+const Const::DataType GetDataByIndex::outType = Const::DataType::Int;
+
+// Assign
+const int Assign::arity = 2;
+const std::string Assign::functionName = "Assign";
+const std::vector<Const::DataType> Assign::inType = {Const::DataType::Variable, Const::DataType::Int};
+const Const::DataType Assign::outType = Const::DataType::Int;
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
-
-
 void Function::addChild(Function *child){
     children.push_back(child);
 };
@@ -129,5 +144,45 @@ void Nxt::execution(){
 
 int Nxt::getArity(){
     return Nxt::arity;
+};
+    
+
+Head::Head(Data *dataptr): Function(dataptr){};
+
+std::string Head::getFunctionName(){
+    return Head::functionName;
+}
+
+void Head::execution(){
+};
+
+int Head::getArity(){
+    return Head::arity;
+};
+    
+GetDataByIndex::GetDataByIndex(Data *dataptr): Function(dataptr){};
+
+std::string GetDataByIndex::getFunctionName(){
+    return GetDataByIndex::functionName;
+}
+
+void GetDataByIndex::execution(){
+};
+
+int GetDataByIndex::getArity(){
+    return GetDataByIndex::arity;
+};
+    
+Assign::Assign(Data *dataptr): Function(dataptr){};
+
+std::string Assign::getFunctionName(){
+    return Assign::functionName;
+}
+
+void Assign::execution(){
+};
+
+int Assign::getArity(){
+    return Assign::arity;
 };
     

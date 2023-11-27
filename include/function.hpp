@@ -111,3 +111,16 @@ protected:
     static const int arity;
 };
 
+class GetDataByIndex: public Function {
+public:
+    GetDataByIndex(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};

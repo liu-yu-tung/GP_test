@@ -1,6 +1,6 @@
 #include "generate_train_data.hpp"
 
-
+/*
 void sorting();
 
 Const::Mission mission = Const::Sorting;
@@ -78,4 +78,4 @@ void sorting(){
             outputFile << std::endl;  
         }
     }
-};
+};*/

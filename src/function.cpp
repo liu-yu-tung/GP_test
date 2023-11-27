@@ -52,7 +52,7 @@ const int BoolEqual::outType = Const::DataType::Bool;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
 void Function::addChild(std::unique_ptr<Function> child){
-    children.push_back(child);
+    children.push_back(std::move(child));
 };
 
 void Function::show(){

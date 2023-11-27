@@ -117,9 +117,9 @@ void Program::grow(std::unique_ptr<Function> &f, int height, bool inRecursive){
         std::unique_ptr<Function> child = randomChooseFunction(height+1, d);
         if(child->getFunctionName()=="Recursive" || inRecursive) grow(child, height+1, true);
         else grow(child, height+1, false);
-        f->children.push_back(child);
+        f->children.push_back(std::move(child));
     }
-    tree.push_back(f);
+    tree.push_back(std::move(f));
 };
 
 

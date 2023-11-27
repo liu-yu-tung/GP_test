@@ -47,24 +47,16 @@ namespace Const{
     };
 
     enum NoneFunc{
-        IfElse,
-        Recursive, 
-        Swap,
-        NUM_ENTRIES
+        IfElse_None,
+        Recursive_None, 
+        Swap_None,
+        NUM_ENTRIES_None
     };
 
     enum IntFunc{
-        Head, 
-        Nxt, 
-        NUM_ENTRIES
-    };
-
-    enum BoolFunc{
-        Greater, 
-        Less, 
-        Equal, 
-        Not, 
-        NUM_ENTRIES
+        Head_Int, 
+        Nxt_Int, 
+        NUM_ENTRIES_Int
     };
 
     static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES-1);

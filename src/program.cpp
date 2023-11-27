@@ -26,7 +26,7 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height){
     case Const::functionSet::Swap:
         f = std::make_unique<Swap>(dataPtr);
         break;
-    case Const::functionSet::Greater:
+ /*   case Const::functionSet::Greater:
         f = std::make_unique<Greater>(dataPtr);
         break;
     case Const::functionSet::Less:
@@ -37,14 +37,14 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height){
         break;
     case Const::functionSet::Not:
         f = std::make_unique<Not>(dataPtr);
-        break;                
+        break;    */            
     default:
         break;
     }
 
 };
 
-std::unique_ptr<Function> Program::randomChooseFunction(int height, Const::DataType& d){
+std::unique_ptr<Function> Program::randomChooseFunction(int height, int d){
     srand(Const::randomSeed);
     std::unique_ptr<Function> f;
 
@@ -53,16 +53,16 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, Const::DataT
     switch (d)
     {
     case Const::DataType::None:
-        functionNumber = (int)(rand()/Const::NoneFunc::NUM_ENTRIES);
+        functionNumber = (int)(rand()/Const::NoneFunc::NUM_ENTRIES_None);
         switch (functionNumber)
         {
-        case Const::NoneFunc::IfElse:
+        case Const::NoneFunc::IfElse_None:
             f = std::make_unique<Function>(IfElse(dataPtr));
             break;
-        case Const::NoneFunc::Recursive:
+        case Const::NoneFunc::Recursive_None:
             f = std::make_unique<Function>(Recursive(dataPtr));
             break;
-        case Const::NoneFunc::Swap:
+        case Const::NoneFunc::Swap_None:
             f = std::make_unique<Function>(Swap(dataPtr));
             break;
         default:
@@ -70,20 +70,20 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, Const::DataT
         }
         break;
     case Const::DataType::Int:
-        functionNumber = (int)(rand()/Const::IntFunc::NUM_ENTRIES);
+        functionNumber = (int)(rand()/Const::IntFunc::NUM_ENTRIES_Int);
         switch (functionNumber)
         {
-        case Const::IntFunc::Head:
+        case Const::IntFunc::Head_Int:
             f = std::make_unique<Function>(Head(dataPtr));
             break;
-        case Const::IntFunc::Nxt:
+        case Const::IntFunc::Nxt_Int:
             f = std::make_unique<Function>(Nxt(dataPtr));
             break;
         default:
             break;
         }
         break;
-    case Const::DataType::Bool:
+  /*  case Const::DataType::Bool:
         functionNumber = (int)(rand()/Const::BoolFunc::NUM_ENTRIES);
         switch (functionNumber)
         {
@@ -102,7 +102,7 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, Const::DataT
         default:
             break;
         }
-        break;
+        break;*/
     default:
         break;
     }
@@ -113,7 +113,7 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, Const::DataT
 void Program::grow(std::unique_ptr<Function> &f, int height, bool inRecursive){
     f->inRecursive = inRecursive;
     if(height==Const::maximumTreeHeight) return;
-    for(Const::DataType &d: f->inType){
+    for(int d: f->inType){
         std::unique_ptr<Function> child = randomChooseFunction(height+1, d);
         if(child->getFunctionName()=="Recursive" || inRecursive) grow(child, height+1, true);
         else grow(child, height+1, false);

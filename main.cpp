@@ -26,8 +26,7 @@
 int main(int argc, char** argv) {
     freopen( "error.txt", "w", stderr );
     generate_train_data();
-    GP gp;
-    gp.evolve();
+
 /*
     std::string filename = "./src/train_data.txt";
     std::ifstream read("traindata.txt");

@@ -17,8 +17,7 @@ class Program{
      * \return The Choosed Function.
     */
     std::unique_ptr<Function> randomChooseFunction(int);
-    std::unique_ptr<Function> randomChooseFunction(int, Const::DataType&);
-
+    std::unique_ptr<Function> randomChooseFunction(int, int);
     /**
      * \brief Called in growTree().
     */

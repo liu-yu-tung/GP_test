@@ -5,50 +5,50 @@ const int Function::arity = -1;
 // IfElse
 const int IfElse::arity = 3;
 const std::string IfElse::functionName = "IfElse";
-const std::vector<Const::DataType> IfElse::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
-const Const::DataType IfElse::outType = Const::DataType::None;
+const std::vector<int> IfElse::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
+const int IfElse::outType = Const::DataType::None;
 
 // Recursive
 const int Recursive::arity = 1;
 const std::string Recursive::functionName = "Recursive";
-const std::vector<Const::DataType> Recursive::inType = {Const::DataType::Function};
-const Const::DataType Recursive::outType = Const::DataType::None;
+const std::vector<int> Recursive::inType = {Const::DataType::Function};
+const int Recursive::outType = Const::DataType::None;
 
 // Swap
 const int Swap::arity = 2;
 const std::string Swap::functionName = "Swap";
-const std::vector<Const::DataType> Swap::inType = {Const::DataType::Int, Const::DataType::Int};
-const Const::DataType Swap::outType = Const::DataType::None;
+const std::vector<int> Swap::inType = {Const::DataType::Int, Const::DataType::Int};
+const int Swap::outType = Const::DataType::None;
 
 // Nxt
 const int Nxt::arity = 0;
 const std::string Nxt::functionName = "Nxt";
-const std::vector<Const::DataType> Nxt::inType = {Const::DataType::None};
-const Const::DataType Nxt::outType = Const::DataType::Int;
+const std::vector<int> Nxt::inType = {Const::DataType::None};
+const int Nxt::outType = Const::DataType::Int;
 
 // Head
 const int Head::arity = 0;
 const std::string Head::functionName = "Head";
-const std::vector<Const::DataType> Head::inType = {Const::DataType::None};
-const Const::DataType Head::outType = Const::DataType::Int;
+const std::vector<int> Head::inType = {Const::DataType::None};
+const int Head::outType = Const::DataType::Int;
 
 // GetDataByIndex
 const int GetDataByIndex::arity = 1;
 const std::string GetDataByIndex::functionName = "GetDataByIndex";
-const std::vector<Const::DataType> GetDataByIndex::inType = {Const::DataType::Int};
-const Const::DataType GetDataByIndex::outType = Const::DataType::Int;
+const std::vector<int> GetDataByIndex::inType = {Const::DataType::Int};
+const int GetDataByIndex::outType = Const::DataType::Int;
 
 // Assign
 const int Assign::arity = 2;
 const std::string Assign::functionName = "Assign";
-const std::vector<Const::DataType> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
-const Const::DataType Assign::outType = Const::DataType::Int;
+const std::vector<int> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
+const int Assign::outType = Const::DataType::Int;
 
 // BoolEqual
 const int BoolEqual::arity = 2;
 const std::string BoolEqual::functionName = "BoolEqual";
-const std::vector<Const::DataType> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
-const Const::DataType BoolEqual::outType = Const::DataType::Bool;
+const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
+const int BoolEqual::outType = Const::DataType::Bool;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
 void Function::addChild(std::unique_ptr<Function> child){

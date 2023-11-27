@@ -28,8 +28,8 @@ public:
     int height;
 
     static const int arity;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
     int intResult;
     bool boolResult;
@@ -42,8 +42,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -63,8 +63,8 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 protected:
     std::unique_ptr<Function> f;
     std::unique_ptr<Function> g;
@@ -79,8 +79,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -93,8 +93,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -107,8 +107,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -121,8 +121,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -135,8 +135,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;
@@ -149,8 +149,8 @@ public:
     void execution() override;
     int getArity() override;
     static const std::string functionName;
-    static const std::vector<Const::DataType> inType;
-    static const Const::DataType outType;
+    static const std::vector<int> inType;
+    static const int outType;
 
 protected:
     static const int arity;

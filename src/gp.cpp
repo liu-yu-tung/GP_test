@@ -17,7 +17,7 @@ GP::GP(){
 GP::~GP(){
     for(Program* program:population) delete program;
 };
-
+/*
 void GP::setData(int x, int i){
     if(Const::dimensionOfBuffer!=1 || Const::typeOfBuffer!=Int) std::cerr << "Cannot set not one dimensional or not int data\n";
     else{
@@ -316,3 +316,4 @@ void GP::evolve(){
 
     inputFile.close();
 };
+*/

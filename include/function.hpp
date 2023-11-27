@@ -32,10 +32,9 @@ public:
     static const Const::DataType outType;
 };
 
-
-class Swap: public Function{
+class Recursive: public Function {
 public:
-    Swap(Data *);
+    Recursive(Data *);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -54,9 +53,9 @@ protected:
  *      else if return(f, data.cdr)
  * .
 */
-class Loop: public Function{
+class IfElse: public Function{
 public:
-    Loop(Data *);
+    IfElse(Data *);
     static const std::string functionName;
     std::string getFunctionName() override;
     void execution() override;
@@ -70,4 +69,45 @@ protected:
 };
 
 
+class Swap: public Function{
+public:
+    Swap(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};
+
+class Nxt: public Function{
+public:
+    Nxt(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};
+
+class Head: public Function{
+public:
+    Head(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};
 

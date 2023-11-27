@@ -2,18 +2,30 @@
 
 const int Function::arity = -1;
 
+// IfElse
+const int IfElse::arity = 3;
+const std::string IfElse::functionName = "IfElse";
+const std::vector<Const::DataType> IfElse::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
+const Const::DataType IfElse::outType = Const::DataType::None;
+
+// Recursive
+const int Recursive::arity = 1;
+const std::string Recursive::functionName = "Recursive";
+const std::vector<Const::DataType> Recursive::inType = {Const::DataType::Function};
+const Const::DataType Recursive::outType = Const::DataType::None;
+
 // Swap
 const int Swap::arity = 2;
 const std::string Swap::functionName = "Swap";
 const std::vector<Const::DataType> Swap::inType = {Const::DataType::Int, Const::DataType::Int};
 const Const::DataType Swap::outType = Const::DataType::None;
 
+// Nxt
+const int Nxt::arity = 0;
+const std::string Nxt::functionName = "Nxt";
+const std::vector<Const::DataType> Nxt::inType = {Const::DataType::None};
+const Const::DataType Nxt::outType = Const::DataType::Int;
 
-// Loop
-const int Loop::arity = 0;
-const std::string Loop::functionName = "Loop";
-const std::vector<Const::DataType> Loop::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
-const Const::DataType Loop::outType = Const::DataType::None;
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
 
@@ -51,6 +63,7 @@ void Function::setListBegin(int begin) {
     listBegin = begin;
 };
 
+
 Swap::Swap(Data *dataptr): Function(dataptr){};
 
 std::string Swap::getFunctionName(){
@@ -73,23 +86,48 @@ void Swap::execution(){
     */
 };
 
-
 int Swap::getArity(){
     return Swap::arity;
 };
-    
-Loop::Loop(Data *dataptr): Function(dataptr){};
 
-std::string Loop::getFunctionName(){
-    return Loop::functionName;
+    
+IfElse::IfElse(Data *dataptr): Function(dataptr){};
+
+std::string IfElse::getFunctionName(){
+    return IfElse::functionName;
 }
 
-void Loop::execution(){
-    int temp; 
+void IfElse::execution(){
 };
 
+int IfElse::getArity(){
+    return IfElse::arity;
+};
+    
 
-int Loop::getArity(){
-    return Loop::arity;
+Recursive::Recursive(Data *dataptr): Function(dataptr){};
+
+std::string Recursive::getFunctionName(){
+    return Recursive::functionName;
+}
+
+void Recursive::execution(){
+};
+
+int Recursive::getArity(){
+    return Recursive::arity;
+};
+    
+Nxt::Nxt(Data *dataptr): Function(dataptr){};
+
+std::string Nxt::getFunctionName(){
+    return Nxt::functionName;
+}
+
+void Nxt::execution(){
+};
+
+int Nxt::getArity(){
+    return Nxt::arity;
 };
     

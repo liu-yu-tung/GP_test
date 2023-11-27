@@ -41,8 +41,14 @@ const Const::DataType GetDataByIndex::outType = Const::DataType::Int;
 // Assign
 const int Assign::arity = 2;
 const std::string Assign::functionName = "Assign";
-const std::vector<Const::DataType> Assign::inType = {Const::DataType::Variable, Const::DataType::Int};
+const std::vector<Const::DataType> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
 const Const::DataType Assign::outType = Const::DataType::Int;
+
+// BoolEqual
+const int BoolEqual::arity = 2;
+const std::string BoolEqual::functionName = "BoolEqual";
+const std::vector<Const::DataType> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
+const Const::DataType BoolEqual::outType = Const::DataType::Bool;
 
 Function::Function(Data* dataPtr_): dataPtr(dataPtr_){};
 void Function::addChild(Function *child){
@@ -86,19 +92,11 @@ std::string Swap::getFunctionName(){
 }
 
 void Swap::execution(){
-    /*
-    int temp; 
-    if(Const::typeOfBuffer==Int){
-        temp = dataPtr->getIntValue(argumentIndex, 1);
-        dataPtr->getIntValue(argumentIndex, 1) = dataPtr->getIntValue(argumentIndex, 2);
-        dataPtr->getIntValue(argumentIndex, 2) = temp;
-    }   
-    else if(Const::typeOfBuffer==Float){
-        temp = dataPtr->getFloatValue(argumentIndex, 1);
-        dataPtr->getFloatValue(argumentIndex, 1) = dataPtr->getFloatValue(argumentIndex, 2);
-        dataPtr->getFloatValue(argumentIndex, 2) = temp;
-    }
-    */
+    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    int tmp1 = (dataPtr->get(params[0]));
+    int tmp2 = (dataPtr->get(params[1]));
+    dataPtr->set(params[0], tmp2);
+    dataPtr->set(params[1], tmp1);
 };
 
 int Swap::getArity(){
@@ -113,6 +111,11 @@ std::string IfElse::getFunctionName(){
 }
 
 void IfElse::execution(){
+    /*
+    Function* f = children[0];
+    Function* g = children[1];
+    f->execution();
+    */
 };
 
 int IfElse::getArity(){
@@ -140,6 +143,7 @@ std::string Nxt::getFunctionName(){
 }
 
 void Nxt::execution(){
+    intResult = listBegin + 1;
 };
 
 int Nxt::getArity(){
@@ -154,6 +158,7 @@ std::string Head::getFunctionName(){
 }
 
 void Head::execution(){
+    intResult = listBegin;
 };
 
 int Head::getArity(){
@@ -180,9 +185,29 @@ std::string Assign::getFunctionName(){
 }
 
 void Assign::execution(){
+
 };
 
 int Assign::getArity(){
     return Assign::arity;
+};
+    
+BoolEqual::BoolEqual(Data *dataptr): Function(dataptr){};
+
+std::string BoolEqual::getFunctionName(){
+    return BoolEqual::functionName;
+}
+
+void BoolEqual::execution(){
+    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    if (params[0] == params[1]) {
+        boolResult = true;
+    } else {
+        boolResult = false;
+    }
+};
+
+int BoolEqual::getArity(){
+    return BoolEqual::arity;
 };
     

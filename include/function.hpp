@@ -8,7 +8,7 @@ class Data;
 class Function {
 friend class Program;
 public:
-    Function(Data* dataPtr);
+    Function(Data* dataPtr_);
 
     void addChild(Function *f);
     void show();
@@ -30,6 +30,9 @@ public:
     static const int arity;
     static const std::vector<Const::DataType> inType;
     static const Const::DataType outType;
+
+    int intResult;
+    bool boolResult;
 };
 
 class Recursive: public Function {
@@ -114,6 +117,34 @@ protected:
 class GetDataByIndex: public Function {
 public:
     GetDataByIndex(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};
+
+class Assign: public Function {
+public:
+    Assign(Data *);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<Const::DataType> inType;
+    static const Const::DataType outType;
+
+protected:
+    static const int arity;
+};
+
+class BoolEqual: public Function {
+public:
+    BoolEqual(Data *);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;

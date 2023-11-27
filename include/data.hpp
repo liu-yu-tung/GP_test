@@ -34,11 +34,32 @@ namespace Const{
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{
-        Loop, 
-        If_else, 
+        IfElse, 
+        Recursive, 
         Swap, 
         Head, 
         Nxt,
+        NUM_ENTRIES
+    };
+
+    enum NoneFunc{
+        IfElse,
+        Recursive, 
+        Swap,
+        NUM_ENTRIES
+    };
+
+    enum IntFunc{
+        Head, 
+        Nxt, 
+        NUM_ENTRIES
+    };
+
+    enum BoolFunc{
+        Greater, 
+        Less, 
+        Equal, 
+        Not, 
         NUM_ENTRIES
     };
 

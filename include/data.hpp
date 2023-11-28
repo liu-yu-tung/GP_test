@@ -21,7 +21,7 @@ namespace Const{
         None
     };
     
-    static const int dataLength = 10;
+    static const int dataLength = 5;
     static const int maximumTreeHeight = 5;
     static int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
     

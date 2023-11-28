@@ -1,5 +1,9 @@
 #include "program.hpp"
 
+Program::Program(Const::growMethod method){
+    growTree(method);
+};
+
 Program::Program(Const::growMethod method, Data &data){
     dataPtr = std::make_shared<Data>(data);
     growTree(method);
@@ -41,7 +45,7 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height){
     default:
         break;
     }
-
+    return std::move(f);
 };
 
 std::unique_ptr<Function> Program::randomChooseFunction(int height, int d){
@@ -57,13 +61,13 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, int d){
         switch (functionNumber)
         {
         case Const::NoneFunc::IfElse_None:
-            f = std::make_unique<Function>(IfElse(dataPtr));
+            f = std::make_unique<IfElse>(dataPtr);
             break;
         case Const::NoneFunc::Recursive_None:
-            f = std::make_unique<Function>(Recursive(dataPtr));
+            f = std::make_unique<Recursive>(dataPtr);
             break;
         case Const::NoneFunc::Swap_None:
-            f = std::make_unique<Function>(Swap(dataPtr));
+            f = std::make_unique<Swap>(dataPtr);
             break;
         default:
             break;
@@ -74,10 +78,10 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, int d){
         switch (functionNumber)
         {
         case Const::IntFunc::Head_Int:
-            f = std::make_unique<Function>(Head(dataPtr));
+            f = std::make_unique<Head>(dataPtr);
             break;
         case Const::IntFunc::Nxt_Int:
-            f = std::make_unique<Function>(Nxt(dataPtr));
+            f = std::make_unique<Nxt>(dataPtr);
             break;
         default:
             break;
@@ -113,7 +117,29 @@ std::unique_ptr<Function> Program::randomChooseFunction(int height, int d){
 void Program::grow(std::unique_ptr<Function> &f, int height, bool inRecursive){
     f->inRecursive = inRecursive;
     if(height==Const::maximumTreeHeight) return;
-    for(int d: f->inType){
+
+    std::unique_ptr<std::vector<int>> inType;
+    switch (f->getFunctionEnum())
+    {
+    case Const::functionSet::IfElse:
+        inType = std::make_unique<std::vector<int>>(IfElse::inType);
+        break;
+    case Const::functionSet::Recursive:
+        inType = std::make_unique<std::vector<int>>(Recursive::inType);
+        break;
+    case Const::functionSet::Swap:
+        inType = std::make_unique<std::vector<int>>(Swap::inType);
+        break;
+    case Const::functionSet::Head:
+        inType = std::make_unique<std::vector<int>>(Head::inType);
+        break;
+    case Const::functionSet::Nxt:
+        inType = std::make_unique<std::vector<int>>(Nxt::inType);
+        break;
+    default:
+        break;
+    }
+    for(int d: *inType){
         std::unique_ptr<Function> child = randomChooseFunction(height+1, d);
         if(child->getFunctionName()=="Recursive" || inRecursive) grow(child, height+1, true);
         else grow(child, height+1, false);
@@ -132,17 +158,18 @@ void Program::growTree(Const::growMethod method){
 };
 
 void Program::execution(){
-    for(std::unique_ptr<Function> &f:tree){
+    for(const auto &f:tree){
         f->execution();
     }
 };
 
 void Program::changeData(Data& data){
-    this->dataPtr = std::make_unique<Data>(data);
+    std::unique_ptr<Data> ptr = std::make_unique<Data>(data);
+    this->dataPtr = std::move(ptr);
 };  
 
 void Program::show(){
-    for(std::unique_ptr<Function> &f:tree){
+    for(const auto &f:tree){
         std::cout << "Function Name: " << f->getFunctionName() << std::endl;
     }
 };

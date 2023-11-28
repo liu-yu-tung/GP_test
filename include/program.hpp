@@ -29,6 +29,7 @@ class Program{
     void growTree(Const::growMethod);
 
 public:
+    Program(Const::growMethod);
     Program(Const::growMethod, Data &);
     void execution();
     void changeData(Data &);

@@ -7,30 +7,35 @@ const int IfElse::arity = 3;
 const std::string IfElse::functionName = "IfElse";
 const std::vector<int> IfElse::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
 const int IfElse::outType = Const::DataType::None;
+const int IfElse::functionEnum = Const::functionSet::IfElse;
 
 // Recursive
 const int Recursive::arity = 1;
 const std::string Recursive::functionName = "Recursive";
 const std::vector<int> Recursive::inType = {Const::DataType::Function};
 const int Recursive::outType = Const::DataType::None;
+const int Recursive::functionEnum = Const::functionSet::Recursive;
 
 // Swap
 const int Swap::arity = 2;
 const std::string Swap::functionName = "Swap";
 const std::vector<int> Swap::inType = {Const::DataType::Int, Const::DataType::Int};
 const int Swap::outType = Const::DataType::None;
+const int Swap::functionEnum = Const::functionSet::Swap;
 
 // Nxt
 const int Nxt::arity = 0;
 const std::string Nxt::functionName = "Nxt";
 const std::vector<int> Nxt::inType = {Const::DataType::None};
 const int Nxt::outType = Const::DataType::Int;
+const int Nxt::functionEnum = Const::functionSet::Nxt;
 
 // Head
 const int Head::arity = 0;
 const std::string Head::functionName = "Head";
 const std::vector<int> Head::inType = {Const::DataType::None};
 const int Head::outType = Const::DataType::Int;
+const int Head::functionEnum = Const::functionSet::Head;
 
 // GetDataByIndex
 const int GetDataByIndex::arity = 1;
@@ -103,6 +108,9 @@ int Swap::getArity(){
     return Swap::arity;
 };
 
+int Swap::getFunctionEnum(){
+    return functionEnum;
+};
     
 IfElse::IfElse(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
@@ -121,7 +129,10 @@ void IfElse::execution(){
 int IfElse::getArity(){
     return IfElse::arity;
 };
-    
+
+int IfElse::getFunctionEnum(){
+    return functionEnum;
+};
 
 Recursive::Recursive(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
@@ -134,6 +145,10 @@ void Recursive::execution(){
 
 int Recursive::getArity(){
     return Recursive::arity;
+};
+
+int Recursive::getFunctionEnum(){
+    return functionEnum;
 };
     
 Nxt::Nxt(std::shared_ptr<Data> dataptr): Function(dataptr){};
@@ -149,8 +164,11 @@ void Nxt::execution(){
 int Nxt::getArity(){
     return Nxt::arity;
 };
-    
 
+int Nxt::getFunctionEnum(){
+    return functionEnum;
+};
+    
 Head::Head(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Head::getFunctionName(){
@@ -165,6 +183,10 @@ int Head::getArity(){
     return Head::arity;
 };
     
+int Head::getFunctionEnum(){
+    return functionEnum;
+};
+
 GetDataByIndex::GetDataByIndex(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string GetDataByIndex::getFunctionName(){

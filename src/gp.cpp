@@ -1,4 +1,5 @@
 #include "gp.hpp"
+/*
 const Const::Mission GP::mission = Const::Mission::Sorting;
 const int GP::totalPopulation = 100;
 const int GP::maximumGeneration = 30;
@@ -17,7 +18,7 @@ GP::GP(){
 GP::~GP(){
     for(Program* program:population) delete program;
 };
-/*
+
 void GP::setData(int x, int i){
     if(Const::dimensionOfBuffer!=1 || Const::typeOfBuffer!=Int) std::cerr << "Cannot set not one dimensional or not int data\n";
     else{

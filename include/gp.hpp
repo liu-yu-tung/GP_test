@@ -11,7 +11,7 @@
 #include <filesystem>
 #include <sstream>
 
-
+/*
 class GP{
     int totalFitness;
     float totalInverseFitness;
@@ -52,3 +52,4 @@ public:
     void evolve();
 
 };
+*/

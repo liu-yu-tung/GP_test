@@ -19,6 +19,7 @@ public:
     virtual std::string getFunctionName() = 0;
     virtual void execution() = 0;
     virtual int getArity() = 0;
+    virtual int getFunctionEnum() = 0;
 
     std::shared_ptr<Data> dataPtr;
     std::vector<std::unique_ptr<Function>> children;
@@ -28,11 +29,14 @@ public:
     int height;
 
     static const int arity;
+    static const int functionEnum;
+
     static const std::vector<int> inType;
     static const int outType;
 
     int intResult;
     bool boolResult;
+
 };
 
 class Recursive: public Function {
@@ -41,9 +45,13 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
+    static const int functionEnum;
+
 
 protected:
     static const int arity;
@@ -63,8 +71,11 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::vector<int> inType;
     static const int outType;
+    static const int functionEnum;
 protected:
     std::unique_ptr<Function> f;
     std::unique_ptr<Function> g;
@@ -78,10 +89,12 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
-
+    static const int functionEnum;
 protected:
     static const int arity;
 };
@@ -92,10 +105,12 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
-
+    static const int functionEnum;
 protected:
     static const int arity;
 };
@@ -106,10 +121,12 @@ public:
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
-
+    static const int functionEnum;
 protected:
     static const int arity;
 };

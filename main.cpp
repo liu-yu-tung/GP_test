@@ -32,11 +32,10 @@ int main(int argc, char** argv) {
     data.set(3, 5);
     data.set(4, 6);
     data.show();
-    {
-    Program P(Const::growMethod, data);
+    Program P(Const::growMethod::full, data);
+    P.changeData(data);
     P.show();
-    }
-/*  
+    /*  
     std::string filename = "./src/train_data.txt";
     std::ifstream read("traindata.txt");
     if(!read.is_open()) std::cout << "didn't open";

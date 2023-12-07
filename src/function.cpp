@@ -40,23 +40,23 @@ const std::vector<int> Head::inType = {Const::DataType::None};
 const int Head::outType = Const::DataType::Int;
 const int Head::functionEnum = Const::functionSet::Head;
 
-// GetDataByIndex
-const int GetDataByIndex::arity = 1;
-const std::string GetDataByIndex::functionName = "GetDataByIndex";
-const std::vector<int> GetDataByIndex::inType = {Const::DataType::Int};
-const int GetDataByIndex::outType = Const::DataType::Int;
-
-// Assign
-const int Assign::arity = 2;
-const std::string Assign::functionName = "Assign";
-const std::vector<int> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
-const int Assign::outType = Const::DataType::Int;
-
-// BoolEqual
-const int BoolEqual::arity = 2;
-const std::string BoolEqual::functionName = "BoolEqual";
-const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
-const int BoolEqual::outType = Const::DataType::Int;
+// // GetDataByIndex
+// const int GetDataByIndex::arity = 1;
+// const std::string GetDataByIndex::functionName = "GetDataByIndex";
+// const std::vector<int> GetDataByIndex::inType = {Const::DataType::Int};
+// const int GetDataByIndex::outType = Const::DataType::Int;
+// 
+// // Assign
+// const int Assign::arity = 2;
+// const std::string Assign::functionName = "Assign";
+// const std::vector<int> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
+// const int Assign::outType = Const::DataType::Int;
+// 
+// // BoolEqual
+// const int BoolEqual::arity = 2;
+// const std::string BoolEqual::functionName = "BoolEqual";
+// const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
+// const int BoolEqual::outType = Const::DataType::Int;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
 void Function::addChild(std::shared_ptr<Function> child){
@@ -106,6 +106,7 @@ void Swap::execution(){
     for (auto c : children) {
         if (c != NULL) {
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+            listBegin %= Const::dataLength;
         }
     }
     int params[2];
@@ -113,10 +114,10 @@ void Swap::execution(){
         int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
     } else {
         params[0] = listBegin;
-        params[1] = listBegin + 1;
+        params[1] = (listBegin + 1)%Const::dataLength;
     }
     if (params[0] == params[1]) {
-        params[1] = params[0]+1;
+        params[1] = (params[0]+1)%Const::dataLength;
     }
     int tmp1 = (dataPtr->get(params[0]));
     int tmp2 = (dataPtr->get(params[1]));
@@ -159,6 +160,11 @@ std::string Recursive::getFunctionName(){
 
 void Recursive::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
+    for (auto c : children) {
+        if (c != NULL) {
+            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        }
+    }
     dataPtr->show();
 };
 
@@ -183,7 +189,7 @@ void Nxt::execution(){
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
         }
     }
-    intResult = listBegin + 1;
+    intResult = (listBegin + 1)%Const::dataLength;
     dataPtr->show();
 };
 
@@ -193,7 +199,7 @@ int Nxt::getArity(){
 
 int Nxt::getFunctionEnum(){
     return functionEnum;
-    };
+};
 
     
 Head::Head(std::shared_ptr<Data> dataptr): Function(dataptr){};
@@ -205,7 +211,9 @@ std::string Head::getFunctionName(){
 void Head::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
     for (auto c : children) {
-        listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        if (c != NULL) {
+            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        }
     }
     intResult = listBegin;
     dataPtr->show();
@@ -219,53 +227,53 @@ int Head::getFunctionEnum(){
     return functionEnum;
 };
 
-GetDataByIndex::GetDataByIndex(std::shared_ptr<Data> dataptr): Function(dataptr){};
-
-std::string GetDataByIndex::getFunctionName(){
-    return GetDataByIndex::functionName;
-}
-
-void GetDataByIndex::execution(){
-    fprintf(stderr, "%s\n", functionName.c_str());
-    dataPtr->show();
-};
-
-int GetDataByIndex::getArity(){
-    return GetDataByIndex::arity;
-};
-    
-Assign::Assign(std::shared_ptr<Data> dataptr): Function(dataptr){};
-
-std::string Assign::getFunctionName(){
-    return Assign::functionName;
-}
-
-void Assign::execution(){
-    fprintf(stderr, "%s\n", functionName.c_str());
-    dataPtr->show();
-
-};
-
-int Assign::getArity(){
-    return Assign::arity;
-};
-    
-BoolEqual::BoolEqual(std::shared_ptr<Data> dataptr): Function(dataptr){};
-
-std::string BoolEqual::getFunctionName(){
-    return BoolEqual::functionName;
-}
-
-void BoolEqual::execution(){
-    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
-    if (params[0] == params[1]) {
-        boolResult = true;
-    } else {
-        boolResult = false;
-    }
-};
-
-int BoolEqual::getArity(){
-    return BoolEqual::arity;
-};
-    
+// GetDataByIndex::GetDataByIndex(std::shared_ptr<Data> dataptr): Function(dataptr){};
+// 
+// std::string GetDataByIndex::getFunctionName(){
+//     return GetDataByIndex::functionName;
+// }
+// 
+// void GetDataByIndex::execution(){
+//     fprintf(stderr, "%s\n", functionName.c_str());
+//     dataPtr->show();
+// };
+// 
+// int GetDataByIndex::getArity(){
+//     return GetDataByIndex::arity;
+// };
+//     
+// Assign::Assign(std::shared_ptr<Data> dataptr): Function(dataptr){};
+// 
+// std::string Assign::getFunctionName(){
+//     return Assign::functionName;
+// }
+// 
+// void Assign::execution(){
+//     fprintf(stderr, "%s\n", functionName.c_str());
+//     dataPtr->show();
+// 
+// };
+// 
+// int Assign::getArity(){
+//     return Assign::arity;
+// };
+//     
+// BoolEqual::BoolEqual(std::shared_ptr<Data> dataptr): Function(dataptr){};
+// 
+// std::string BoolEqual::getFunctionName(){
+//     return BoolEqual::functionName;
+// }
+// 
+// void BoolEqual::execution(){
+//     int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+//     if (params[0] == params[1]) {
+//         boolResult = true;
+//     } else {
+//         boolResult = false;
+//     }
+// };
+// 
+// int BoolEqual::getArity(){
+//     return BoolEqual::arity;
+// };
+//     

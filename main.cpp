@@ -29,24 +29,24 @@ void unbuffered_io() {
     setbuf(stderr, NULL);
 }
 
+Data data;
+Data output;
+
 int main(int argc, char** argv) {
     srand(Const::randomSeed);
     unbuffered_io();
     //freopen( "error.txt", "w", stderr);
-    Data data;
     data.set(0, 2);
     data.set(1, 3);
     data.set(2, 4);
     data.set(3, 5);
     data.set(4, 6);
     data.show();
-    fprintf(stderr, "here0\n");
     Program P(Const::growMethod::full, data);
-    fprintf(stderr, "here1\n");
-    P.changeData(data);
-    P.show();
     P.execution();
+    fprintf(stderr, "result data\n");
     data.show();
+    P.showData();
     /*  
     std::string filename = "./src/train_data.txt";
     std::ifstream read("traindata.txt");

@@ -204,3 +204,7 @@ void Program::show(){
     }
 };
 
+void Program::showData(){
+    dataPtr = tree[0]->dataPtr;
+    dataPtr->show();
+};

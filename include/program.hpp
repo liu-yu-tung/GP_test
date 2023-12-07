@@ -36,5 +36,6 @@ public:
     void execution();
     void changeData(Data &);
     void show();
+    void showData();
 };
 

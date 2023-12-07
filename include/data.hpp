@@ -24,7 +24,7 @@ namespace Const{
     };
     
     static const int dataLength = 5;
-    static const int maximumTreeHeight = 5;
+    static const int maximumTreeHeight = 10;
     static int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
     
     enum growMethod{
@@ -69,7 +69,7 @@ namespace Const{
     };
 
     static const int trainDataNumber = 100;
-    static int randomSeed = 10901114;
+    static int randomSeed = 901114;
 };
 
 class Data{

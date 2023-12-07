@@ -5,14 +5,14 @@ const int Function::arity = -1;
 // IfElse
 const int IfElse::arity = 3;
 const std::string IfElse::functionName = "IfElse";
-const std::vector<int> IfElse::inType = {Const::DataType::Bool, Const::DataType::Function, Const::DataType::Function};
+const std::vector<int> IfElse::inType = {Const::DataType::Int, Const::DataType::None, Const::DataType::None};
 const int IfElse::outType = Const::DataType::None;
 const int IfElse::functionEnum = Const::functionSet::IfElse;
 
 // Recursive
 const int Recursive::arity = 1;
 const std::string Recursive::functionName = "Recursive";
-const std::vector<int> Recursive::inType = {Const::DataType::Function};
+const std::vector<int> Recursive::inType = {Const::DataType::None};
 const int Recursive::outType = Const::DataType::None;
 const int Recursive::functionEnum = Const::functionSet::Recursive;
 
@@ -53,7 +53,7 @@ const int Assign::outType = Const::DataType::Int;
 const int BoolEqual::arity = 2;
 const std::string BoolEqual::functionName = "BoolEqual";
 const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
-const int BoolEqual::outType = Const::DataType::Bool;
+const int BoolEqual::outType = Const::DataType::Int;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
 void Function::addChild(std::unique_ptr<Function> child){

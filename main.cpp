@@ -23,8 +23,15 @@
  * \param argv The vector of arguments.
  * \return The exec result of main function.
  */
+void unbuffered_io() {
+    setbuf(stdin, NULL);
+    setbuf(stdout, NULL);
+    setbuf(stderr, NULL);
+}
+
 int main(int argc, char** argv) {
-    freopen( "error.txt", "w", stderr);
+    unbuffered_io();
+    //freopen( "error.txt", "w", stderr);
     Data data;
     data.set(0, 2);
     data.set(1, 3);
@@ -32,8 +39,9 @@ int main(int argc, char** argv) {
     data.set(3, 5);
     data.set(4, 6);
     data.show();
+    fprintf(stderr, "here0\n");
     Program P(Const::growMethod::full, data);
-    printf("here\n");
+    fprintf(stderr, "here1\n");
     P.changeData(data);
     P.show();
     /*  

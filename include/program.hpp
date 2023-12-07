@@ -1,6 +1,7 @@
 #pragma once
 #include "function.hpp"
 #include "data.hpp"
+#include <string>
 #include <vector>
 #include <memory>
 #include <list>

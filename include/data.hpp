@@ -16,9 +16,11 @@ namespace Const{
 
     enum DataType{
         Int,
-        Bool, 
-        Function, 
-        None
+        //Bool, 
+        //FunctionInt, 
+        //FunctionNone, 
+        None,
+        NUM_ENTRIES_DATATYPE,
     };
     
     static const int dataLength = 5;

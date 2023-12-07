@@ -102,22 +102,33 @@ std::string Swap::getFunctionName(){
 }
 void Swap::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
-    
-    for (auto c : children) {
-        if (c != NULL) {
-            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
-            listBegin %= Const::dataLength;
+    if (inRecursive) {
+        for(auto &c : children) {
+            if (c != NULL && children.size()) {
+                c->execution();
+            }
         }
     }
-    int params[2];
-    if (children[0] != NULL) {
-        int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
-    } else {
-        params[0] = listBegin;
-        params[1] = (listBegin + 1)%Const::dataLength;
+    
+    for (auto c : children) {
+        if (c != NULL && children.size()) {
+            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        }
+        listBegin %= Const::dataLength;
     }
-    if (params[0] == params[1]) {
-        params[1] = (params[0]+1)%Const::dataLength;
+    int params[2];
+    if (children.size() >= 2) {
+        if (children[0] != NULL) {
+            int params[2] = {children[0]->intResult + listBegin, listBegin};
+        } if (children[1] != NULL) {
+            params[1] = params[0]+1;
+        } else {
+            params[0] = listBegin;
+            params[1] = (listBegin + 1)%Const::dataLength;
+        }
+        if (params[0] == params[1]) {
+            params[1] = (params[0]+1)%Const::dataLength;
+        }
     }
     int tmp1 = (dataPtr->get(params[0]));
     int tmp2 = (dataPtr->get(params[1]));
@@ -160,6 +171,13 @@ std::string Recursive::getFunctionName(){
 
 void Recursive::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
+    if (inRecursive) {
+        for(auto &c : children) {
+            if (c != NULL) {
+                c->execution();
+            }
+        }
+    }
     for (auto c : children) {
         if (c != NULL) {
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
@@ -184,6 +202,13 @@ std::string Nxt::getFunctionName(){
 
 void Nxt::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
+    if (inRecursive) {
+        for(auto &c : children) {
+            if (c != NULL) {
+                c->execution();
+            }
+        }
+    }
     for (auto c : children) {
         if (c != NULL) {
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
@@ -210,6 +235,13 @@ std::string Head::getFunctionName(){
 
 void Head::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
+    if (inRecursive) {
+        for(auto &c : children) {
+            if (c != NULL) {
+                c->execution();
+            }
+        }
+    }
     for (auto c : children) {
         if (c != NULL) {
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;

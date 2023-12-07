@@ -8,8 +8,8 @@
 #include <stdlib.h>
 
 class Program{
-    std::unique_ptr<Function> root;
-    std::vector<std::unique_ptr<Function>> tree; //store tree in prefix order
+    std::shared_ptr<Function> root;
+    std::vector<std::shared_ptr<Function>> tree; //store tree in prefix order
     std::shared_ptr<Data> dataPtr;
 
     /**
@@ -17,12 +17,12 @@ class Program{
      * \param int Random seed.
      * \return The Choosed Function.
     */
-    std::unique_ptr<Function> randomChooseFunction(int);
-    std::unique_ptr<Function> randomChooseFunction(int, int);
+    std::shared_ptr<Function> randomChooseFunction(int);
+    std::shared_ptr<Function> randomChooseFunction(int, int);
     /**
      * \brief Called in growTree().
     */
-    void grow(std::unique_ptr<Function> &, int, bool);
+    void grow(std::shared_ptr<Function> &, int, bool);
 
     /**
      * \brief Base on different method grow the tree.

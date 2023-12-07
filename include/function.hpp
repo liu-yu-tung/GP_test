@@ -9,7 +9,7 @@ class Function {
 friend class Program;
 public:
     Function(std::shared_ptr<Data> dataPtr);
-
+    virtual ~Function() = 0;
     void addChild(const std::unique_ptr<Function> f);
     void show();
     void setHeight(int h);

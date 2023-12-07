@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
     data.set(4, 6);
     data.show();
     Program P(Const::growMethod::full, data);
+    printf("here\n");
     P.changeData(data);
     P.show();
     /*  
@@ -42,6 +43,7 @@ int main(int argc, char** argv) {
 
     int num;
     read >> num;
-    std::cout << num << std::endl;*/
+    std::cout << num << std::endl;
+    */
     return 0;
 }

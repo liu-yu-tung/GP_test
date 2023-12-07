@@ -1,4 +1,5 @@
-#include "fitness.hpp"/*
+#include "fitness.hpp"
+/*
 Fitness::Fitness(Data* d): dataPtr(d), finish(false){};
 
 Sorting::Sorting(Data *d): Fitness(d){};
@@ -48,4 +49,5 @@ int Sorting::evaluation(){
     }
 
     return score;
-};*/
+};
+*/

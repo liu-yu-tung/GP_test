@@ -31,6 +31,7 @@ class Program{
 public:
     Program(Const::growMethod);
     Program(Const::growMethod, Data &);
+    ~Program();
     void execution();
     void changeData(Data &);
     void show();

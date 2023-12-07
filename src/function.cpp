@@ -60,6 +60,8 @@ void Function::addChild(std::unique_ptr<Function> child){
     children.push_back(std::move(child));
 };
 
+Function::~Function() {};
+
 void Function::show(){
     std::cout << "::::::::::::::Show Function:::::::::::::::::" << std::endl;
     std::cout << "Function Name: " << getFunctionName() << std::endl;

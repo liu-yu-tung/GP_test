@@ -9,6 +9,8 @@ Program::Program(Const::growMethod method, Data &data){
     growTree(method);
 };
 
+Program::~Program() {};
+
 std::unique_ptr<Function> Program::randomChooseFunction(int height){
     srand(Const::randomSeed);
     std::unique_ptr<Function> f;

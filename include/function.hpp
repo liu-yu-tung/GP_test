@@ -10,7 +10,7 @@ friend class Program;
 public:
     Function(std::shared_ptr<Data> dataPtr);
     virtual ~Function() = 0;
-    void addChild(const std::unique_ptr<Function> f);
+    void addChild(const std::shared_ptr<Function> f);
     void show();
     void setHeight(int h);
     void setInRecursive(bool state);
@@ -22,7 +22,7 @@ public:
     virtual int getFunctionEnum() = 0;
 
     std::shared_ptr<Data> dataPtr;
-    std::vector<std::unique_ptr<Function>> children;
+    std::vector<std::shared_ptr<Function>> children;
 
     bool inRecursive;
     int listBegin;
@@ -77,8 +77,8 @@ public:
     static const int outType;
     static const int functionEnum;
 protected:
-    std::unique_ptr<Function> f;
-    std::unique_ptr<Function> g;
+    std::shared_ptr<Function> f;
+    std::shared_ptr<Function> g;
     static const int arity;
 };
 

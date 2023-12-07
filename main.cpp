@@ -30,6 +30,7 @@ void unbuffered_io() {
 }
 
 int main(int argc, char** argv) {
+    srand(Const::randomSeed);
     unbuffered_io();
     //freopen( "error.txt", "w", stderr);
     Data data;
@@ -44,6 +45,8 @@ int main(int argc, char** argv) {
     fprintf(stderr, "here1\n");
     P.changeData(data);
     P.show();
+    P.execution();
+    data.show();
     /*  
     std::string filename = "./src/train_data.txt";
     std::ifstream read("traindata.txt");

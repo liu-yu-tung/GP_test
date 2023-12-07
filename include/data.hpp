@@ -36,20 +36,20 @@ namespace Const{
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{
-        IfElse, 
-        Recursive, 
-        Swap, 
+        //IfElse, 
         Head, 
         Nxt,
-        Greater, 
-        Less, 
-        Equal, 
-        Not,
+        Recursive, 
+        Swap, 
+        //Greater, 
+        //Less, 
+        //Equal, 
+        //Not,
         NUM_ENTRIES
     };
 
     enum NoneFunc{
-        IfElse_None,
+        //IfElse_None,
         Recursive_None, 
         Swap_None,
         NUM_ENTRIES_None
@@ -69,7 +69,7 @@ namespace Const{
     };
 
     static const int trainDataNumber = 100;
-    static const int randomSeed = 2023;
+    static int randomSeed = 10901114;
 };
 
 class Data{

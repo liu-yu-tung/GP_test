@@ -3,11 +3,14 @@
 const int Function::arity = -1;
 
 // IfElse
+/*
 const int IfElse::arity = 3;
 const std::string IfElse::functionName = "IfElse";
 const std::vector<int> IfElse::inType = {Const::DataType::Int, Const::DataType::None, Const::DataType::None};
 const int IfElse::outType = Const::DataType::None;
 const int IfElse::functionEnum = Const::functionSet::IfElse;
+*/
+
 
 // Recursive
 const int Recursive::arity = 1;
@@ -56,7 +59,7 @@ const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataTyp
 const int BoolEqual::outType = Const::DataType::Int;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
-void Function::addChild(std::unique_ptr<Function> child){
+void Function::addChild(std::shared_ptr<Function> child){
     children.push_back(std::move(child));
 };
 
@@ -97,13 +100,29 @@ Swap::Swap(std::shared_ptr<Data> dataptr): Function(dataptr){};
 std::string Swap::getFunctionName(){
     return Swap::functionName;
 }
-
 void Swap::execution(){
-    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    fprintf(stderr, "%s\n", functionName.c_str());
+    
+    for (auto c : children) {
+        if (c != NULL) {
+            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        }
+    }
+    int params[2];
+    if (children[0] != NULL) {
+        int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    } else {
+        params[0] = listBegin;
+        params[1] = listBegin + 1;
+    }
+    if (params[0] == params[1]) {
+        params[1] = params[0]+1;
+    }
     int tmp1 = (dataPtr->get(params[0]));
     int tmp2 = (dataPtr->get(params[1]));
     dataPtr->set(params[0], tmp2);
     dataPtr->set(params[1], tmp1);
+    dataPtr->show();
 };
 
 int Swap::getArity(){
@@ -114,27 +133,23 @@ int Swap::getFunctionEnum(){
     return functionEnum;
 };
     
+/*
 IfElse::IfElse(std::shared_ptr<Data> dataptr): Function(dataptr){};
-
 std::string IfElse::getFunctionName(){
     return IfElse::functionName;
 }
-
 void IfElse::execution(){
-    /*
     Function* f = children[0];
     Function* g = children[1];
     f->execution();
-    */
 };
-
 int IfElse::getArity(){
     return IfElse::arity;
 };
-
 int IfElse::getFunctionEnum(){
     return functionEnum;
 };
+*/
 
 Recursive::Recursive(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
@@ -143,6 +158,8 @@ std::string Recursive::getFunctionName(){
 }
 
 void Recursive::execution(){
+    fprintf(stderr, "%s\n", functionName.c_str());
+    dataPtr->show();
 };
 
 int Recursive::getArity(){
@@ -160,7 +177,14 @@ std::string Nxt::getFunctionName(){
 }
 
 void Nxt::execution(){
+    fprintf(stderr, "%s\n", functionName.c_str());
+    for (auto c : children) {
+        if (c != NULL) {
+            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+        }
+    }
     intResult = listBegin + 1;
+    dataPtr->show();
 };
 
 int Nxt::getArity(){
@@ -169,7 +193,8 @@ int Nxt::getArity(){
 
 int Nxt::getFunctionEnum(){
     return functionEnum;
-};
+    };
+
     
 Head::Head(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
@@ -178,7 +203,12 @@ std::string Head::getFunctionName(){
 }
 
 void Head::execution(){
+    fprintf(stderr, "%s\n", functionName.c_str());
+    for (auto c : children) {
+        listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
+    }
     intResult = listBegin;
+    dataPtr->show();
 };
 
 int Head::getArity(){
@@ -196,6 +226,8 @@ std::string GetDataByIndex::getFunctionName(){
 }
 
 void GetDataByIndex::execution(){
+    fprintf(stderr, "%s\n", functionName.c_str());
+    dataPtr->show();
 };
 
 int GetDataByIndex::getArity(){
@@ -209,6 +241,8 @@ std::string Assign::getFunctionName(){
 }
 
 void Assign::execution(){
+    fprintf(stderr, "%s\n", functionName.c_str());
+    dataPtr->show();
 
 };
 

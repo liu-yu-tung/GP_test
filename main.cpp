@@ -33,8 +33,10 @@ Data data;
 Data output;
 
 int main(int argc, char** argv) {
+    Const::randomSeed = atoi(argv[1]);
     srand(Const::randomSeed);
     unbuffered_io();
+    printf("Const::randomSeed: %d\n", Const::randomSeed);
     //freopen( "error.txt", "w", stderr);
     data.set(0, 2);
     data.set(1, 3);
@@ -43,8 +45,9 @@ int main(int argc, char** argv) {
     data.set(4, 6);
     data.show();
     Program P(Const::growMethod::full, data);
+    P.show();
     P.execution();
-    fprintf(stderr, "result data\n");
+    printf("result data\n");
     data.show();
     P.showData();
     /*  

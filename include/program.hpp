@@ -19,10 +19,12 @@ class Program{
     */
     std::shared_ptr<Function> randomChooseFunction(int);
     std::shared_ptr<Function> randomChooseFunction(int, int);
+    std::shared_ptr<Function> randomChooseNonRecursiveFunction(int, int);
     /**
      * \brief Called in growTree().
     */
     void grow(std::shared_ptr<Function> &, int, bool);
+    void growWithoutRecursive(std::shared_ptr<Function> &, int, bool);
 
     /**
      * \brief Base on different method grow the tree.

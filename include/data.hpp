@@ -24,7 +24,7 @@ namespace Const{
     };
     
     static const int dataLength = 5;
-    static const int maximumTreeHeight = 10;
+    static const int maximumTreeHeight = 5;
     static int fullTreeNodeNumber = pow(2, maximumTreeHeight)-1;
     
     enum growMethod{
@@ -39,8 +39,8 @@ namespace Const{
         //IfElse, 
         Head, 
         Nxt,
-        Recursive, 
         Swap, 
+        Recursive, 
         //Greater, 
         //Less, 
         //Equal, 
@@ -61,6 +61,11 @@ namespace Const{
         NUM_ENTRIES_Int
     };
 
+    enum NoneRecursiveFunc{
+        //IfElse_None,
+        Swap_None_NonRecursive,
+        NUM_ENTRIES_NonRecursive
+    };
     static const int functionSetNumber = static_cast<int>(functionSet::NUM_ENTRIES-1);
 
     enum Mission{
@@ -69,7 +74,7 @@ namespace Const{
     };
 
     static const int trainDataNumber = 100;
-    static int randomSeed = 901114;
+    static int randomSeed;
 };
 
 class Data{

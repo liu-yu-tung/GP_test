@@ -10,8 +10,9 @@ Data::Data(Data& D){
 
 int Data::get(int index){
     if(index<0 || index>=Const::dataLength) {
+        printf("index: %d\n");
         std::cerr << "Data::get(int): Getting data out of index is not allowed.\n";
-        return -1;
+        exit(0);
     }
     else return data[index];
 };

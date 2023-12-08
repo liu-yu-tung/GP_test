@@ -134,6 +134,7 @@ void Swap::execution(){
     int tmp2 = (dataPtr->get(params[1]));
     dataPtr->set(params[0], tmp2);
     dataPtr->set(params[1], tmp1);
+    listBegin++;
     dataPtr->show();
 };
 
@@ -171,19 +172,26 @@ std::string Recursive::getFunctionName(){
 
 void Recursive::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
-    if (inRecursive) {
+    bool no_child = true;
+    while(listBegin<Const::dataLength && children.size() && children[0] != NULL) {
         for(auto &c : children) {
             if (c != NULL) {
+                fprintf(stderr, "c != NULL\n");
+                no_child = false;
                 c->execution();
-            }
+            } 
+        }
+        if (no_child) {
+            fprintf(stderr, "Recursive is empty\n");
+            dataPtr->show();
+            return ;
         }
     }
-    for (auto c : children) {
-        if (c != NULL) {
-            listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
-        }
+    if (no_child) {
+        fprintf(stderr, "Recursive is empty\n");
+        dataPtr->show();
+        return ;
     }
-    dataPtr->show();
 };
 
 int Recursive::getArity(){
@@ -215,6 +223,7 @@ void Nxt::execution(){
         }
     }
     intResult = (listBegin + 1)%Const::dataLength;
+    listBegin++;
     dataPtr->show();
 };
 
@@ -248,6 +257,7 @@ void Head::execution(){
         }
     }
     intResult = listBegin;
+    listBegin++;
     dataPtr->show();
 };
 

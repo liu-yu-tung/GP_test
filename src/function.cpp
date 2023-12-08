@@ -58,7 +58,7 @@ const int Head::functionEnum = Const::functionSet::Head;
 // const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
 // const int BoolEqual::outType = Const::DataType::Int;
 
-Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr(dataPtr_){};
+Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr{dataPtr_}{};
 void Function::addChild(std::shared_ptr<Function> child){
     children.push_back(std::move(child));
 };
@@ -116,14 +116,15 @@ void Swap::execution(){
         }
         listBegin %= Const::dataLength;
     }    
-    int params[2];
+    int params[2] = {0, 0};
     if (children.size() == 2) {
         if (children[0] != NULL) {
-            int params[2] = {children[0]->intResult + listBegin, listBegin};
-        } if (children[1] != NULL) {
+            params[0] = { children[0]->intResult + listBegin};
+        } 
+        if (children[1] != NULL) {
                 params[1] = params[0]+1;
-            }
-    }  else {
+        }
+    } else {
         params[0] = listBegin;
         params[1] = listBegin + 1;
     }
@@ -176,7 +177,7 @@ std::string Recursive::getFunctionName(){
 void Recursive::execution(){
     fprintf(stderr, "%s\n", functionName.c_str());
     bool no_child = true;
-    while(listBegin<Const::dataLength && children.size() && children[0] != NULL) {
+    while(listBegin<Const::dataLength-1 && children.size() && children[0] != NULL) {
         for(auto &c : children) {
             if (c != NULL) {
                 fprintf(stderr, "c != NULL\n");
@@ -187,15 +188,18 @@ void Recursive::execution(){
         }
         if (no_child) {
             fprintf(stderr, "Recursive is empty\n");
+            listBegin = Const::dataLength - 1;
             dataPtr->show();
             return ;
         }
     }
     if (no_child) {
         fprintf(stderr, "Recursive is empty\n");
+        listBegin = Const::dataLength - 1;
         dataPtr->show();
         return ;
     }
+
 };
 
 int Recursive::getArity(){

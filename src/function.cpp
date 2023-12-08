@@ -115,21 +115,24 @@ void Swap::execution(){
             listBegin = listBegin > c->listBegin ? listBegin : c->listBegin;
         }
         listBegin %= Const::dataLength;
-    }
+    }    
     int params[2];
-    if (children.size() >= 2) {
+    if (children.size() == 2) {
         if (children[0] != NULL) {
             int params[2] = {children[0]->intResult + listBegin, listBegin};
         } if (children[1] != NULL) {
-            params[1] = params[0]+1;
-        } else {
-            params[0] = listBegin;
-            params[1] = (listBegin + 1)%Const::dataLength;
-        }
-        if (params[0] == params[1]) {
-            params[1] = (params[0]+1)%Const::dataLength;
-        }
+                params[1] = params[0]+1;
+            }
+    }  else {
+        params[0] = listBegin;
+        params[1] = listBegin + 1;
     }
+    if (params[0] == params[1]) {
+        params[1] = (params[0]+1)%Const::dataLength;
+    }
+    params[0]%=Const::dataLength;
+    params[1]%=Const::dataLength;
+    fprintf(stderr, "params: %d, %d\n", params[0], params[1]);
     int tmp1 = (dataPtr->get(params[0]));
     int tmp2 = (dataPtr->get(params[1]));
     dataPtr->set(params[0], tmp2);
@@ -179,6 +182,7 @@ void Recursive::execution(){
                 fprintf(stderr, "c != NULL\n");
                 no_child = false;
                 c->execution();
+                listBegin = c->listBegin;
             } 
         }
         if (no_child) {

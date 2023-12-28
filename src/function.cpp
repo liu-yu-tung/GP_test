@@ -55,6 +55,7 @@ const int Equal::arity = 2;
 const std::string Equal::functionName = "Equal";
 const std::vector<int> Equal::inType = {Const::DataType::Int, Const::DataType::Int};
 const int Equal::outType = Const::DataType::Bool;
+const int Equal::functionEnum = Const::functionSet::Equal;
 
 /*
 // Less

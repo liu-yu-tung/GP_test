@@ -36,23 +36,25 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height){
     case Const::functionSet::Recursive:
         f = std::make_shared<Recursive>(dataPtr);
         break;
-    /*
     case Const::functionSet::IfElse:
         f = std::make_shared<IfElse>(dataPtr);
         break;
-    */
- /*   case Const::functionSet::Greater:
+        /*
+    case Const::functionSet::Greater:
         f = std::make_shared<Greater>(dataPtr);
         break;
     case Const::functionSet::Less:
         f = std::make_shared<Less>(dataPtr);
         break;
+        */
     case Const::functionSet::Equal:
         f = std::make_shared<Equal>(dataPtr);
         break;
+    /*
     case Const::functionSet::Not:
         f = std::make_shared<Not>(dataPtr);
-        break;    */            
+        break;
+    */
     default:
         break;
     }
@@ -77,9 +79,9 @@ std::shared_ptr<Function> Program::randomChooseNonRecursiveFunction(int height, 
         //fprintf(stderr, "functionNumber: %d\n", functionNumber);
         switch (functionNumber)
         {
-        // case Const::NoneFunc::IfElse_None:
-        //     f = std::make_shared<IfElse>(dataPtr);
-        //     break;
+        case Const::NoneFunc::IfElse_None:
+            f = std::make_shared<IfElse>(dataPtr);
+            break;
         case Const::NoneFunc::Swap_None:
             f = std::make_shared<Swap>(dataPtr);
             break;
@@ -101,26 +103,30 @@ std::shared_ptr<Function> Program::randomChooseNonRecursiveFunction(int height, 
             break;
         }
         break;
-  /*  case Const::DataType::Bool:
-        functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES);
+    case Const::DataType::Bool:
+        functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES_Bool);
         switch (functionNumber)
         {
-        case Const::BoolFunc::Greater:
-            f = std::make_shared<Function>(Greater(dataPtr));
+            /*
+        case Const::BoolFunc::Greater_Bool:
+            f = std::make_shared<Greater>(dataPtr);
             break;
-        case Const::BoolFunc::Less:
-            f = std::make_shared<Function>(Less(dataPtr));
+        case Const::BoolFunc::Less_Bool:
+            f = std::make_shared<Less>(dataPtr);
             break;
-        case Const::BoolFunc::Equal:
-            f = std::make_shared<Function>(Equal(dataPtr));
+            */
+        case Const::BoolFunc::Equal_Bool:
+            f = std::make_shared<Equal>(dataPtr);
             break;
+        /*
         case Const::BoolFunc::Not:
             f = std::make_shared<Function>(Not(dataPtr));
             break;
+        */
         default:
             break;
         }
-        break;*/
+        break;
     default:
         break;
     }
@@ -142,9 +148,9 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height, int d){
         //fprintf(stderr, "functionNumber: %d\n", functionNumber);
         switch (functionNumber)
         {
-        // case Const::NoneFunc::IfElse_None:
-        //     f = std::make_shared<IfElse>(dataPtr);
-        //     break;
+        case Const::NoneFunc::IfElse_None:
+            f = std::make_shared<IfElse>(dataPtr);
+            break;
         case Const::NoneFunc::Recursive_None:
             f = std::make_shared<Recursive>(dataPtr);
             break;
@@ -169,26 +175,30 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height, int d){
             break;
         }
         break;
-  /*  case Const::DataType::Bool:
-        functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES);
+    case Const::DataType::Bool:
+        functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES_Bool);
         switch (functionNumber)
         {
-        case Const::BoolFunc::Greater:
-            f = std::make_shared<Function>(Greater(dataPtr));
+        /*
+        case Const::BoolFunc::Greater_Bool:
+            f = std::make_shared<Greater>(dataPtr);
             break;
-        case Const::BoolFunc::Less:
-            f = std::make_shared<Function>(Less(dataPtr));
+        case Const::BoolFunc::Less_Bool:
+            f = std::make_shared<Less>(dataPtr);
             break;
-        case Const::BoolFunc::Equal:
-            f = std::make_shared<Function>(Equal(dataPtr));
+            */
+        case Const::BoolFunc::Equal_Bool:
+            f = std::make_shared<Equal>(dataPtr);
             break;
+        /*
         case Const::BoolFunc::Not:
             f = std::make_shared<Function>(Not(dataPtr));
             break;
+            */
         default:
             break;
         }
-        break;*/
+        break;
     default:
         break;
     }
@@ -206,12 +216,10 @@ void Program::grow(std::shared_ptr<Function> &f, int height, bool inRecursive){
     ////fprintf(stderr, "std::shared_ptr<std::vector<int>> inType\n");
     switch (f->getFunctionEnum())
     {
-    /*
     case Const::functionSet::IfElse:
         //fprintf(stderr, "ifElse\n");
         inType = std::make_shared<std::vector<int>>(IfElse::inType);
         break;
-    */
     case Const::functionSet::Head:
         //fprintf(stderr, "Head\n");
         inType = std::make_shared<std::vector<int>>(Head::inType);
@@ -255,12 +263,10 @@ void Program::growWithoutRecursive(std::shared_ptr<Function> &f, int height, boo
     ////fprintf(stderr, "std::shared_ptr<std::vector<int>> inType\n");
     switch (f->getFunctionEnum())
     {
-    /*
     case Const::functionSet::IfElse:
         //fprintf(stderr, "ifElse\n");
         inType = std::make_shared<std::vector<int>>(IfElse::inType);
         break;
-    */
     case Const::functionSet::Head:
         //fprintf(stderr, "Head\n");
         inType = std::make_shared<std::vector<int>>(Head::inType);

@@ -131,9 +131,67 @@ protected:
     static const int arity;
 };
 
-class GetDataByIndex: public Function {
+// class GetDataByIndex: public Function {
+// public:
+//     GetDataByIndex(std::shared_ptr<Data>);
+//     std::string getFunctionName() override;
+//     void execution() override;
+//     int getArity() override;
+//     static const std::string functionName;
+//     static const std::vector<int> inType;
+//     static const int outType;
+// 
+// protected:
+//     static const int arity;
+// };
+// 
+// class Assign: public Function {
+// public:
+//     Assign(std::shared_ptr<Data>);
+//     std::string getFunctionName() override;
+//     void execution() override;
+//     int getArity() override;
+//     static const std::string functionName;
+//     static const std::vector<int> inType;
+//     static const int outType;
+// 
+// protected:
+//     static const int arity;
+// };
+
+class Equal: public Function{
 public:
-    GetDataByIndex(std::shared_ptr<Data>);
+    Equal(std::shared_ptr<Data>);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    int getFunctionEnum() override;
+
+    static const std::string functionName;
+    static const std::vector<int> inType;
+    static const int outType;
+    static const int functionEnum;
+protected:
+    static const int arity;
+};
+
+/*
+class Less: public Function {
+public:
+    Less(std::shared_ptr<Data>);
+    std::string getFunctionName() override;
+    void execution() override;
+    int getArity() override;
+    static const std::string functionName;
+    static const std::vector<int> inType;
+    static const int outType;
+protected:
+    static const int arity;
+};
+
+class Greater: public Function {
+public:
+    Greater(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
@@ -144,31 +202,4 @@ public:
 protected:
     static const int arity;
 };
-
-class Assign: public Function {
-public:
-    Assign(std::shared_ptr<Data>);
-    std::string getFunctionName() override;
-    void execution() override;
-    int getArity() override;
-    static const std::string functionName;
-    static const std::vector<int> inType;
-    static const int outType;
-
-protected:
-    static const int arity;
-};
-
-class BoolEqual: public Function {
-public:
-    BoolEqual(std::shared_ptr<Data>);
-    std::string getFunctionName() override;
-    void execution() override;
-    int getArity() override;
-    static const std::string functionName;
-    static const std::vector<int> inType;
-    static const int outType;
-
-protected:
-    static const int arity;
-};
+*/

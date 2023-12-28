@@ -3,13 +3,11 @@
 const int Function::arity = -1;
 
 // IfElse
-/*
 const int IfElse::arity = 3;
 const std::string IfElse::functionName = "IfElse";
-const std::vector<int> IfElse::inType = {Const::DataType::Int, Const::DataType::None, Const::DataType::None};
+const std::vector<int> IfElse::inType = {Const::DataType::Bool, Const::DataType::None, Const::DataType::None};
 const int IfElse::outType = Const::DataType::None;
 const int IfElse::functionEnum = Const::functionSet::IfElse;
-*/
 
 
 // Recursive
@@ -52,11 +50,27 @@ const int Head::functionEnum = Const::functionSet::Head;
 // const std::vector<int> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
 // const int Assign::outType = Const::DataType::Int;
 // 
-// // BoolEqual
-// const int BoolEqual::arity = 2;
-// const std::string BoolEqual::functionName = "BoolEqual";
-// const std::vector<int> BoolEqual::inType = {Const::DataType::Int, Const::DataType::Int};
-// const int BoolEqual::outType = Const::DataType::Int;
+// BoolEqual
+const int Equal::arity = 2;
+const std::string Equal::functionName = "Equal";
+const std::vector<int> Equal::inType = {Const::DataType::Int, Const::DataType::Int};
+const int Equal::outType = Const::DataType::Bool;
+
+/*
+// Less
+const int Less::arity = 2;
+const std::string Less::functionName = "Less";
+const std::vector<int> Less::inType = {Const::DataType::Int, Const::DataType::Int};
+const int Less::outType = Const::DataType::Bool;
+*/
+
+// Greater
+/*
+const int Greater::arity = 2;
+const std::string Greater::functionName = "Greater";
+const std::vector<int> Greater::inType = {Const::DataType::Int, Const::DataType::Int};
+const int Greater::outType = Const::DataType::Bool;
+*/
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr{dataPtr_}{};
 void Function::addChild(std::shared_ptr<Function> child){
@@ -150,15 +164,19 @@ int Swap::getFunctionEnum(){
     return functionEnum;
 };
     
-/*
 IfElse::IfElse(std::shared_ptr<Data> dataptr): Function(dataptr){};
 std::string IfElse::getFunctionName(){
     return IfElse::functionName;
 }
 void IfElse::execution(){
-    Function* f = children[0];
-    Function* g = children[1];
-    f->execution();
+    bool state = children[0]->boolResult;
+    std::shared_ptr<Function> f = children[1];
+    std::shared_ptr<Function> g = children[2];
+    if (state) {
+        f->execution();
+    } else {
+        g->execution();
+    }
 };
 int IfElse::getArity(){
     return IfElse::arity;
@@ -166,7 +184,6 @@ int IfElse::getArity(){
 int IfElse::getFunctionEnum(){
     return functionEnum;
 };
-*/
 
 Recursive::Recursive(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
@@ -308,22 +325,65 @@ int Head::getFunctionEnum(){
 //     return Assign::arity;
 // };
 //     
-// BoolEqual::BoolEqual(std::shared_ptr<Data> dataptr): Function(dataptr){};
-// 
-// std::string BoolEqual::getFunctionName(){
-//     return BoolEqual::functionName;
-// }
-// 
-// void BoolEqual::execution(){
-//     int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
-//     if (params[0] == params[1]) {
-//         boolResult = true;
-//     } else {
-//         boolResult = false;
-//     }
-// };
-// 
-// int BoolEqual::getArity(){
-//     return BoolEqual::arity;
-// };
-//     
+Equal::Equal(std::shared_ptr<Data> dataptr): Function(dataptr){};
+
+std::string Equal::getFunctionName(){
+    return Equal::functionName;
+}
+
+void Equal::execution(){
+    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    if (params[0] == params[1]) {
+        boolResult = true;
+    } else {
+        boolResult = false;
+    }
+};
+
+int Equal::getArity(){
+   return Equal::arity;
+};
+
+int Equal::getFunctionEnum(){
+    return functionEnum;
+};
+/*
+Less::Less(std::shared_ptr<Data> dataptr): Function(dataptr){};
+
+std::string Less::getFunctionName(){
+    return Less::functionName;
+}
+
+void Less::execution(){
+    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    if (params[0] < params[1]) {
+        boolResult = true;
+    } else {
+        boolResult = false;
+    }
+};
+
+int Less::getArity(){
+    return Less::arity;
+};
+*/
+/*    
+Greater::Greater(std::shared_ptr<Data> dataptr): Function(dataptr){};
+
+std::string Greater::getFunctionName(){
+    return Greater::functionName;
+}
+
+void Greater::execution(){
+    int params[2] = {children[0]->intResult + listBegin, children[1]->intResult + listBegin};
+    if (params[0] > params[1]) {
+        boolResult = true;
+    } else {
+        boolResult = false;
+    }
+};
+
+int Greater::getArity(){
+    return Greater::arity;
+};
+*/    

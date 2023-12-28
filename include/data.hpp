@@ -15,11 +15,11 @@
 namespace Const{
 
     enum DataType{
+        None,
         Int,
-        //Bool, 
+        Bool, 
         //FunctionInt, 
         //FunctionNone, 
-        None,
         NUM_ENTRIES_DATATYPE,
     };
     
@@ -36,20 +36,20 @@ namespace Const{
     static const growMethod growMethodGlobal = growMethod::full; 
 
     enum functionSet{
-        //IfElse, 
         Head, 
         Nxt,
         Swap, 
         Recursive, 
+        IfElse, 
         //Greater, 
         //Less, 
-        //Equal, 
+        Equal, 
         //Not,
         NUM_ENTRIES
     };
 
     enum NoneFunc{
-        //IfElse_None,
+        IfElse_None,
         Recursive_None, 
         Swap_None,
         NUM_ENTRIES_None
@@ -61,6 +61,12 @@ namespace Const{
         NUM_ENTRIES_Int
     };
 
+    enum BoolFunc{
+        // Less_Bool,
+        //Greater_Bool,
+        Equal_Bool,
+        NUM_ENTRIES_Bool
+    };
     enum NoneRecursiveFunc{
         //IfElse_None,
         Swap_None_NonRecursive,

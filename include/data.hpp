@@ -68,7 +68,7 @@ namespace Const{
         NUM_ENTRIES_Bool
     };
     enum NoneRecursiveFunc{
-        //IfElse_None,
+        IfElse_NoneRecursive,
         Swap_None_NonRecursive,
         NUM_ENTRIES_NonRecursive
     };

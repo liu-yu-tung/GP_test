@@ -230,6 +230,15 @@ void Program::grow(std::shared_ptr<Function> &f, int height, bool inRecursive){
         //fprintf(stderr, "Recursive\n");
         inType = std::make_shared<std::vector<int>>(Recursive::inType);
         break;
+    case Const::functionSet::Greater:
+        inType = std::make_shared<std::vector<int>>(Greater::inType);
+        break;
+    case Const::functionSet::Less:
+        inType = std::make_shared<std::vector<int>>(Less::inType);
+        break;
+    case Const::functionSet::Equal:
+        inType = std::make_shared<std::vector<int>>(Equal::inType);
+        break;
     default:
         break;
     }
@@ -298,6 +307,10 @@ void Program::growTree(Const::growMethod method){
     // Base on different method grow the tree
     if(method==Const::full){
         //fprintf(stderr, "if(method==Const::full)\n");
+        if (root == NULL) {
+            fprintf(stderr, "root == NULL\n");
+            exit(0);
+        }
         grow(root, 1, false);
     }
 };

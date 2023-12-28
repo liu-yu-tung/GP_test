@@ -39,14 +39,12 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height){
     case Const::functionSet::IfElse:
         f = std::make_shared<IfElse>(dataPtr);
         break;
-        /*
     case Const::functionSet::Greater:
         f = std::make_shared<Greater>(dataPtr);
         break;
     case Const::functionSet::Less:
         f = std::make_shared<Less>(dataPtr);
         break;
-        */
     case Const::functionSet::Equal:
         f = std::make_shared<Equal>(dataPtr);
         break;
@@ -107,14 +105,12 @@ std::shared_ptr<Function> Program::randomChooseNonRecursiveFunction(int height, 
         functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES_Bool);
         switch (functionNumber)
         {
-            /*
         case Const::BoolFunc::Greater_Bool:
             f = std::make_shared<Greater>(dataPtr);
             break;
         case Const::BoolFunc::Less_Bool:
             f = std::make_shared<Less>(dataPtr);
             break;
-            */
         case Const::BoolFunc::Equal_Bool:
             f = std::make_shared<Equal>(dataPtr);
             break;
@@ -179,14 +175,12 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height, int d){
         functionNumber = (int)(rand()%Const::BoolFunc::NUM_ENTRIES_Bool);
         switch (functionNumber)
         {
-        /*
         case Const::BoolFunc::Greater_Bool:
             f = std::make_shared<Greater>(dataPtr);
             break;
         case Const::BoolFunc::Less_Bool:
             f = std::make_shared<Less>(dataPtr);
             break;
-            */
         case Const::BoolFunc::Equal_Bool:
             f = std::make_shared<Equal>(dataPtr);
             break;
@@ -207,9 +201,9 @@ std::shared_ptr<Function> Program::randomChooseFunction(int height, int d){
 };
 
 void Program::grow(std::shared_ptr<Function> &f, int height, bool inRecursive){
-    //fprintf(stderr, "Program::grow(std::shared_ptr<Function> &f, int height, bool inRecursive)\n");
+    // fprintf(stderr, "Program::grow(std::shared_ptr<Function> &f, int height, bool inRecursive)\n");
     f->inRecursive = inRecursive;
-    ////fprintf(stderr, "f->inRecursive = inRecursive\n");
+    // fprintf(stderr, "f->inRecursive = inRecursive\n");
     if(height==Const::maximumTreeHeight) return;
     ////fprintf(stderr, "if(height==Const::maximumTreeHeight) return\n");
     std::shared_ptr<std::vector<int>> inType;

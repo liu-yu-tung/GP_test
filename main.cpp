@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
     data.show();
     Program P(Const::growMethod::full, data);
     P.show();
-    P.execution();
+    //P.execution();
     printf("result data\n");
     data.show();
     P.showData();

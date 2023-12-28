@@ -50,28 +50,26 @@ const int Head::functionEnum = Const::functionSet::Head;
 // const std::vector<int> Assign::inType = {Const::DataType::Int, Const::DataType::Int};
 // const int Assign::outType = Const::DataType::Int;
 // 
-// BoolEqual
+// Equal
 const int Equal::arity = 2;
 const std::string Equal::functionName = "Equal";
 const std::vector<int> Equal::inType = {Const::DataType::Int, Const::DataType::Int};
 const int Equal::outType = Const::DataType::Bool;
 const int Equal::functionEnum = Const::functionSet::Equal;
 
-/*
 // Less
 const int Less::arity = 2;
 const std::string Less::functionName = "Less";
 const std::vector<int> Less::inType = {Const::DataType::Int, Const::DataType::Int};
 const int Less::outType = Const::DataType::Bool;
-*/
+const int Less::functionEnum = Const::functionSet::Less;
 
 // Greater
-/*
 const int Greater::arity = 2;
 const std::string Greater::functionName = "Greater";
 const std::vector<int> Greater::inType = {Const::DataType::Int, Const::DataType::Int};
 const int Greater::outType = Const::DataType::Bool;
-*/
+const int Greater::functionEnum = Const::functionSet::Greater;
 
 Function::Function(std::shared_ptr<Data> dataPtr_): dataPtr{dataPtr_}{};
 void Function::addChild(std::shared_ptr<Function> child){
@@ -348,7 +346,6 @@ int Equal::getArity(){
 int Equal::getFunctionEnum(){
     return functionEnum;
 };
-/*
 Less::Less(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Less::getFunctionName(){
@@ -367,8 +364,9 @@ void Less::execution(){
 int Less::getArity(){
     return Less::arity;
 };
-*/
-/*    
+int Less::getFunctionEnum(){
+    return functionEnum;
+};
 Greater::Greater(std::shared_ptr<Data> dataptr): Function(dataptr){};
 
 std::string Greater::getFunctionName(){
@@ -387,4 +385,6 @@ void Greater::execution(){
 int Greater::getArity(){
     return Greater::arity;
 };
-*/    
+int Greater::getFunctionEnum(){
+    return functionEnum;
+};

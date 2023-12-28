@@ -175,31 +175,34 @@ protected:
     static const int arity;
 };
 
-/*
-class Less: public Function {
+class Less: public Function{
 public:
     Less(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
+    static const int functionEnum;
 protected:
     static const int arity;
 };
 
-class Greater: public Function {
+class Greater: public Function{
 public:
     Greater(std::shared_ptr<Data>);
     std::string getFunctionName() override;
     void execution() override;
     int getArity() override;
+    int getFunctionEnum() override;
+
     static const std::string functionName;
     static const std::vector<int> inType;
     static const int outType;
-
+    static const int functionEnum;
 protected:
     static const int arity;
 };
-*/

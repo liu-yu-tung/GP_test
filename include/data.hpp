@@ -41,8 +41,8 @@ namespace Const{
         Swap, 
         Recursive, 
         IfElse, 
-        //Greater, 
-        //Less, 
+        Greater, 
+        Less, 
         Equal, 
         //Not,
         NUM_ENTRIES
@@ -62,8 +62,8 @@ namespace Const{
     };
 
     enum BoolFunc{
-        // Less_Bool,
-        //Greater_Bool,
+        Less_Bool,
+        Greater_Bool,
         Equal_Bool,
         NUM_ENTRIES_Bool
     };
